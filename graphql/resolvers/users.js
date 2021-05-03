@@ -19,6 +19,7 @@ function generateToken(user) {
     process.env.SECRET_KEY,
     { expiresIn: "1h" }
   );
+  return token;
 }
 
 module.exports = {
@@ -64,7 +65,7 @@ module.exports = {
       if (!valid) {
         throw new UserInputError("Register Input Errors", { errors });
       }
-      // TODO: make sure user is unique
+      // make sure user is unique
       const user = await User.findOne({ username });
       if (user) {
         throw new UserInputError("Username is taken", {
@@ -74,7 +75,7 @@ module.exports = {
         });
       }
 
-      // TODO: hash password and create an auth token
+      // hash password and create an auth token
       password = await bcrypt.hash(password, 10);
 
       const newUser = new User({
