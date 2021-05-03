@@ -30,6 +30,13 @@ module.exports = {
     async createPost(_, { anime, episode, body }, context) {
       const user = checkAuth(context);
 
+      if (anime.trim() === "") {
+        throw new Error("You must enter an anime");
+      }
+      if (!(episode >= 0)) {
+        throw new Error("You must enter a valid episode number");
+      }
+
       const newPost = new Post({
         anime: anime,
         episode: episode,
@@ -40,6 +47,9 @@ module.exports = {
       });
 
       const post = await newPost.save();
+      context.pubsub.publish("NEW_POST", {
+        newPost: post,
+      });
 
       return post;
     },
@@ -57,6 +67,11 @@ module.exports = {
       } catch (err) {
         throw new Error(err);
       }
+    },
+  },
+  Subscription: {
+    newPost: {
+      subscribe: (_, __, { pubsub }) => pubsub.asyncIterator("NEW_POST"),
     },
   },
 };

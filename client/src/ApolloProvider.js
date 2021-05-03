@@ -1,6 +1,7 @@
 import React from "react";
-import App from "./App";
+import App from "./components/App";
 import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
+import { GeistProvider, CssBaseline } from "@geist-ui/react";
 
 const client = new ApolloClient({
   uri: "http://localhost:5000",
@@ -9,6 +10,10 @@ const client = new ApolloClient({
 
 export default (
   <ApolloProvider client={client}>
-    <App />
+    <GeistProvider>
+      <CssBaseline>
+        <App />
+      </CssBaseline>
+    </GeistProvider>
   </ApolloProvider>
 );
