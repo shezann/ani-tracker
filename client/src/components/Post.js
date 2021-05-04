@@ -39,14 +39,14 @@ export default function Post(props) {
 
   return (
     <Row style={{ flexWrap: "wrap" }} justify="space-around">
-      <Card hoverable width="330px">
+      <Card hoverable width="330px" className="post-card">
         <Text h4>{anime}</Text>
         <Description title={`EPISODE ${episode}`} content={body} />
 
         <Card.Footer className="card-footer">
           <User
             src="https://react.geist-ui.dev/images/avatar.png"
-            name="Evil Rabbit"
+            name={username}
           >
             <Link underline href={`/posts/${id}`}>
               {moment(createdAt).fromNow(true)}
@@ -63,9 +63,6 @@ export default function Post(props) {
           >
             {commentCount}
           </Button>
-
-          <Heart />
-          <MessageSquare />
         </Card.Footer>
       </Card>
     </Row>
