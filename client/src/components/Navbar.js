@@ -43,6 +43,7 @@ export default function Navbar() {
           name={user.username}
         />
         <Button
+          onClick={logout}
           size={btnSize}
           type="error"
           ghost

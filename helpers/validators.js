@@ -7,20 +7,20 @@ module.exports.validateRegisterInput = (
   const errors = {};
 
   if (username.trim() === "") {
-    errors.username = "Username must not be empty";
+    errors.username = "Enter an username";
   }
 
   if (email.trim() === "") {
-    errors.email = "Email must no be empty";
+    errors.email = "Enter an email";
   } else {
     const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
     if (!email.match(regEx)) {
-      errors.email = "Not an email";
+      errors.email = "Enter a real email";
     }
   }
 
   if (password === "") {
-    errors.password = "Please enter a password";
+    errors.password = "Enter a password";
   } else if (password !== confirmPassword) {
     errors.confirmPassword = "Passwords don't match";
   }
