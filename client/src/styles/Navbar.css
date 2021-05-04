@@ -2,14 +2,30 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  background-color: blanchedalmond;
-  height: 8vh;
+  box-shadow: rgb(0 0 0 / 10%) 0px 0px 15px 0px;
+  height: 10vh;
+  margin: auto;
 }
 
-.sign-btns {
-  margin-right: 0.5rem;
+.btn-container {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10%;
+  width: 80%;
 }
 
 .register-btn {
   margin-left: 0.5rem;
+}
+
+.logo {
+  margin-bottom: -5%;
+}
+
+@media only screen and (max-width: 420px) {
+  .btn-container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
 }

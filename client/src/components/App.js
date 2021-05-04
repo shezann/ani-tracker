@@ -7,19 +7,17 @@ import Login from "./Login";
 import Register from "./Register";
 import "../styles/App.css";
 
-//TODO: create a navbar for HomePage
+import { AuthProvider } from "../context/auth";
 
 function App() {
   const pathname = window.location.pathname;
 
   return (
-    <BrowserRouter>
-      <Switch>
+    <AuthProvider>
+      <BrowserRouter>
         <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-      </Switch>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

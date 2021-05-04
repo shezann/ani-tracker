@@ -5,7 +5,7 @@ import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import Navbar from "./Navbar";
 import "../styles/Pages.css";
-import { Card, Grid } from "@geist-ui/react";
+import { Grid, Divider, Row, Loading } from "@geist-ui/react";
 import Post from "./Post";
 
 export default function Home() {
@@ -16,14 +16,17 @@ export default function Home() {
   return (
     <div className="home">
       <Navbar />
-      {/* TODO: display posts here */}
       <div className="posts-container">
+        <Divider volume={2} x={2} y={5} align="center">
+          Recent Posts
+        </Divider>
         {loading ? (
-          <h1>Loading posts...</h1>
+          <Row style={{ padding: "10px 0" }}>
+            <Loading />
+          </Row>
         ) : (
           //since loading is done we can display the posts here
           <div>
-            <h1>Recent Posts</h1>
             <Grid.Container gap={2} justify="flex-start">
               {posts &&
                 posts.map((post) => (

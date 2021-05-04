@@ -1,13 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Navbar from "./Navbar";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import "../styles/Pages.css";
 import { Input, Spacer, Modal, Note } from "@geist-ui/react";
 import { User, Mail } from "@geist-ui/react-icons";
-import { Redirect } from "react-router";
+import { Redirect, useHistory } from "react-router";
+import { AuthContext } from "../context/auth";
 
 export default function Register(props) {
+  const context = useContext(AuthContext);
+  const history = useHistory();
   const [errors, setErrors] = useState({});
   const { showRegister, closeHandler, setShowRegister } = props;
 
@@ -24,7 +27,9 @@ export default function Register(props) {
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(proxy, result) {
-      window.location.reload();
+      context.login(result.data.login);
+      closeHandler();
+      history.push("/");
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.exception.errors);
