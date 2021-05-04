@@ -1,0 +1,15 @@
+.navbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  background-color: blanchedalmond;
+  height: 8vh;
+}
+
+.sign-btns {
+  margin-right: 0.5rem;
+}
+
+.register-btn {
+  margin-left: 0.5rem;
+}
