@@ -1,3 +1,6 @@
+/* eslint-disable */
+/* eslint-disable */
+
 import React, { useState, useContext } from "react";
 import { Button, User, useMediaQuery } from "@geist-ui/react";
 import { UserPlus, LogIn, LogOut } from "@geist-ui/react-icons";
@@ -16,7 +19,6 @@ export default function Navbar() {
   const { user, logout } = useContext(AuthContext);
   const userImgURL =
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP_ug6bYQJ9ilkd9rMKpqQ2fnOIYC5u4go_A&usqp=CAU";
-  console.log(user);
 
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -28,10 +30,6 @@ export default function Navbar() {
     setShowLogin(false);
     setShowRegister(false);
   };
-
-  function handleRegisterSubmit() {
-    console.log("submit register");
-  }
 
   //display items
   const navBar = user ? (
@@ -82,7 +80,6 @@ export default function Navbar() {
             Register
           </Button>
 
-          {/* TODO: add Login component here */}
           <Login
             closeHandler={closeHandler}
             showLogin={showLogin}

@@ -1,23 +1,50 @@
 /* eslint-disable */
-
-import React from "react";
+import React, { useState, useContext } from "react";
 import { useQuery } from "@apollo/client";
 import gql from "graphql-tag";
 import Navbar from "./Navbar";
+import CreatePost from "./CreatePost";
 import "../styles/Pages.css";
-import { Grid, Divider, Row, Loading } from "@geist-ui/react";
+import { Grid, Divider, Row, Loading, Button } from "@geist-ui/react";
 import Post from "./Post";
+import { AuthContext } from "../context/auth";
 
 export default function Home() {
+  const { user } = useContext(AuthContext);
+
   const { loading, data: { getPosts: posts } = {}, error } = useQuery(
     GET_POSTS_QUERY
   );
+
+  const [showCreatePost, setShowCreatePost] = useState(false);
+  const createPostHandler = () => setShowCreatePost(true);
+  const closeHandler = (event) => {
+    setShowCreatePost(false);
+  };
 
   return (
     <div className="home">
       <Navbar />
       <div className="posts-container">
-        <Divider volume={2} x={2} y={5} align="center">
+        {user && (
+          <Button
+            className="fab"
+            onClick={createPostHandler}
+            auto
+            shadow
+            type="success"
+          >
+            Post
+          </Button>
+        )}
+
+        <CreatePost
+          closeHandler={closeHandler}
+          showCreatePost={showCreatePost}
+          setShowCreatePost={setShowCreatePost}
+        />
+
+        <Divider volume={2} y={4} align="center">
           Recent Posts
         </Divider>
         {loading ? (

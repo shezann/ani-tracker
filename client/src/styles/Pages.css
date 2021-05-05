@@ -5,7 +5,14 @@
   align-items: center;
 }
 
+.fab {
+  position: fixed !important;
+  bottom: 5%;
+  right: 10%;
+  z-index: 99 !important;
 
+  border-radius: 100px !important;
+}
 
 .input-error-msg {
   margin: auto;

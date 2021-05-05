@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState, useContext } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
