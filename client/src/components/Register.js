@@ -8,6 +8,7 @@ import { Input, Spacer, Modal, Note } from "@geist-ui/react";
 import { User, Mail } from "@geist-ui/react-icons";
 import { useHistory } from "react-router";
 import { AuthContext } from "../context/auth";
+import { REGISTER_USER } from "../graphql";
 
 export default function Register(props) {
   const context = useContext(AuthContext);
@@ -110,27 +111,3 @@ export default function Register(props) {
     </div>
   );
 }
-
-const REGISTER_USER = gql`
-  mutation register(
-    $username: String!
-    $email: String!
-    $password: String!
-    $confirmPassword: String!
-  ) {
-    register(
-      registerInput: {
-        username: $username
-        email: $email
-        password: $password
-        confirmPassword: $confirmPassword
-      }
-    ) {
-      id
-      email
-      username
-      createdAt
-      token
-    }
-  }
-`;

@@ -1,12 +1,12 @@
 /* eslint-disable */
 
 import React, { useState, useContext } from "react";
-import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import "../styles/Pages.css";
 import { Input, Spacer, Modal, AutoComplete, Textarea } from "@geist-ui/react";
 import { User, Mail } from "@geist-ui/react-icons";
 import { useHistory } from "react-router";
+import { CREATE_POST, GET_POSTS } from "../graphql";
 var axios = require("axios");
 
 export default function CreatePost(props) {
@@ -14,6 +14,7 @@ export default function CreatePost(props) {
   const history = useHistory();
 
   const [options, setOptions] = useState();
+
   const [searching, setSearching] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
 
@@ -25,9 +26,20 @@ export default function CreatePost(props) {
   });
 
   const [createPost, { loading }] = useMutation(CREATE_POST, {
-    update(_, result) {
-      console.log(result);
-      setInput({});
+    update(proxy, result) {
+      //use cache for data
+      const data = proxy.readQuery({ query: GET_POSTS });
+      proxy.writeQuery({
+        query: GET_POSTS,
+        data: { getPosts: [result.data.createPost, ...data.getPosts] },
+      });
+
+      setInput({
+        anime: "",
+        episode: "",
+        rating: "",
+        body: "",
+      });
       closeHandler();
       history.push("/");
     },
@@ -68,18 +80,28 @@ export default function CreatePost(props) {
   }
 
   function handleEpisode(event) {
-    let parsedData = "";
-    if (event.target.value) {
-      parsedData = parseInt(event.target.value);
+    const regEx = /^\d{0,3}$/;
+    if (event.target.value.match(regEx)) {
+      let parsedData = "";
+      if (event.target.value) {
+        parsedData = parseInt(event.target.value);
+      }
+      setInput({ ...input, episode: parsedData });
     }
-    setInput({ ...input, episode: parsedData });
   }
   function handleRating(event) {
-    let parsedData = "";
-    if (event.target.value) {
-      parsedData = parseInt(event.target.value);
+    const regEx = /^\d{0,2}$/;
+
+    if (event.target.value.match(regEx)) {
+      let parsedData = "";
+      if (event.target.value) {
+        parsedData = parseInt(event.target.value);
+        if (parsedData > 10) {
+          parsedData = 10;
+        }
+      }
+      setInput({ ...input, rating: parsedData });
     }
-    setInput({ ...input, rating: parsedData });
   }
   function handleBody(event) {
     setInput({ ...input, [event.target.name]: event.target.value });
@@ -141,35 +163,3 @@ export default function CreatePost(props) {
     </div>
   );
 }
-
-const CREATE_POST = gql`
-  mutation createPost(
-    $anime: String!
-    $episode: Int!
-    $rating: Int
-    $body: String
-  ) {
-    createPost(anime: $anime, episode: $episode, rating: $rating, body: $body) {
-      id
-      anime
-      episode
-      rating
-      body
-      createdAt
-      username
-      likes {
-        id
-        username
-        createdAt
-      }
-      likeCount
-      comments {
-        id
-        body
-        username
-        createdAt
-      }
-      commentCount
-    }
-  }
-`;

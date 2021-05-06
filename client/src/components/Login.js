@@ -8,6 +8,7 @@ import { Input, Spacer, Modal, Note } from "@geist-ui/react";
 import { User, Mail } from "@geist-ui/react-icons";
 import { Redirect, useHistory } from "react-router";
 import { AuthContext } from "../context/auth";
+import { LOGIN_USER } from "../graphql";
 
 export default function Login(props) {
   const history = useHistory();
@@ -93,14 +94,3 @@ export default function Login(props) {
     </div>
   );
 }
-
-const LOGIN_USER = gql`
-  mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      id
-      email
-      username
-      token
-    }
-  }
-`;

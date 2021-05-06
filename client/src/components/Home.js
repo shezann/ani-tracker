@@ -8,12 +8,13 @@ import "../styles/Pages.css";
 import { Grid, Divider, Row, Loading, Button } from "@geist-ui/react";
 import Post from "./Post";
 import { AuthContext } from "../context/auth";
+import { GET_POSTS } from "../graphql";
 
 export default function Home() {
   const { user } = useContext(AuthContext);
 
   const { loading, data: { getPosts: posts } = {}, error } = useQuery(
-    GET_POSTS_QUERY
+    GET_POSTS
   );
 
   const [showCreatePost, setShowCreatePost] = useState(false);
@@ -68,28 +69,3 @@ export default function Home() {
     </div>
   );
 }
-
-const GET_POSTS_QUERY = gql`
-  {
-    getPosts {
-      id
-      anime
-      episode
-      rating
-      body
-      username
-      createdAt
-      likeCount
-      likes {
-        username
-      }
-      commentCount
-      comments {
-        id
-        username
-        createdAt
-        body
-      }
-    }
-  }
-`;
