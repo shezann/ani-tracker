@@ -18,3 +18,15 @@
   margin: auto;
   width: 80%;
 }
+
+.ep-rating {
+  display: flex !important;
+  justify-content: space-between !important;
+}
+.rating-btn {
+  display: flex !important;
+  align-items: flex-end !important;
+}
+.ep-btn {
+  display: flex !important;
+}

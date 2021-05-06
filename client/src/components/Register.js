@@ -1,13 +1,12 @@
 /* eslint-disable */
 
 import React, { useState, useContext } from "react";
-import Navbar from "./Navbar";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import "../styles/Pages.css";
 import { Input, Spacer, Modal, Note } from "@geist-ui/react";
 import { User, Mail } from "@geist-ui/react-icons";
-import { Redirect, useHistory } from "react-router";
+import { useHistory } from "react-router";
 import { AuthContext } from "../context/auth";
 
 export default function Register(props) {

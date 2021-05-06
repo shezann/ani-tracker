@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 const postSchema = new Schema({
   anime: String,
   episode: Number,
+  rating: Number,
   body: String,
   username: String,
   createdAt: String,

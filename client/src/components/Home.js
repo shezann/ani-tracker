@@ -75,6 +75,7 @@ const GET_POSTS_QUERY = gql`
       id
       anime
       episode
+      rating
       body
       username
       createdAt

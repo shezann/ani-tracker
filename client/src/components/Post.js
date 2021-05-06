@@ -8,6 +8,7 @@ import {
   User,
   Text,
   Link,
+  Badge,
 } from "@geist-ui/react";
 import { Heart, MessageSquare } from "@geist-ui/react-icons";
 import React from "react";
@@ -20,6 +21,7 @@ export default function Post(props) {
     id,
     anime,
     episode,
+    rating,
     body,
     username,
     createdAt,
@@ -27,6 +29,9 @@ export default function Post(props) {
     commentCount,
     likes,
   } = props.post;
+
+  let quality = "";
+  rating > 5 ? (quality = "good") : (quality = "bad");
 
   // TODO: make the functions
   function handleLike() {
@@ -39,7 +44,12 @@ export default function Post(props) {
 
   return (
     <Card hoverable className="post-card">
-      <Text h4>{anime}</Text>
+      <div className="anime-title">
+        <Text h4>{anime}</Text>
+        <div className={`show-rating ${quality}`}>
+          <h4>{rating}</h4>
+        </div>
+      </div>
       <Description title={`EPISODE ${episode}`} content={body} />
 
       <Card.Footer className="card-footer">

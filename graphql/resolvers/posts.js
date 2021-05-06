@@ -27,7 +27,7 @@ module.exports = {
     },
   },
   Mutation: {
-    async createPost(_, { anime, episode, body }, context) {
+    async createPost(_, { anime, episode, rating, body }, context) {
       const user = checkAuth(context);
 
       if (anime.trim() === "") {
@@ -36,10 +36,14 @@ module.exports = {
       if (!(episode >= 0)) {
         throw new Error("You must enter a valid episode number");
       }
+      if (!(rating >= 0)) {
+        throw new Error("You must enter a valid rating");
+      }
 
       const newPost = new Post({
         anime: anime,
         episode: episode,
+        rating: rating,
         body: body,
         user: user.id,
         username: user.username,

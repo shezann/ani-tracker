@@ -1,17 +1,17 @@
 /* eslint-disable */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import "../styles/Pages.css";
-import { Input, Spacer, Modal, AutoComplete } from "@geist-ui/react";
+import { Input, Spacer, Modal, AutoComplete, Textarea } from "@geist-ui/react";
 import { User, Mail } from "@geist-ui/react-icons";
 import { useHistory } from "react-router";
-import { AuthContext } from "../context/auth";
 var axios = require("axios");
 
 export default function CreatePost(props) {
   const { showCreatePost, closeHandler, setShowCreatePost } = props;
+  const history = useHistory();
 
   const [options, setOptions] = useState();
   const [searching, setSearching] = useState(false);
@@ -19,8 +19,22 @@ export default function CreatePost(props) {
 
   const [input, setInput] = useState({
     anime: "",
-    episode: 0,
+    episode: "",
+    rating: "",
     body: "",
+  });
+
+  const [createPost, { loading }] = useMutation(CREATE_POST, {
+    update(_, result) {
+      console.log(result);
+      setInput({});
+      closeHandler();
+      history.push("/");
+    },
+    onError(err) {
+      console.log(err);
+    },
+    variables: input,
   });
 
   async function search(val) {
@@ -50,7 +64,25 @@ export default function CreatePost(props) {
   };
 
   function handleSubmit() {
-    console.log("submit post");
+    createPost();
+  }
+
+  function handleEpisode(event) {
+    let parsedData = "";
+    if (event.target.value) {
+      parsedData = parseInt(event.target.value);
+    }
+    setInput({ ...input, episode: parsedData });
+  }
+  function handleRating(event) {
+    let parsedData = "";
+    if (event.target.value) {
+      parsedData = parseInt(event.target.value);
+    }
+    setInput({ ...input, rating: parsedData });
+  }
+  function handleBody(event) {
+    setInput({ ...input, [event.target.name]: event.target.value });
   }
 
   return (
@@ -60,29 +92,44 @@ export default function CreatePost(props) {
           <h3>Just finished an episode?</h3>
           <Modal.Subtitle>Share your thoughts</Modal.Subtitle>
           <Spacer y={1} />
-          <div>Output</div>
           <AutoComplete
             name="anime"
             searching={searching}
             options={options}
-            placeholder="Enter here"
+            placeholder="Which anime did you watch?"
             onSearch={searchHandler}
+            width="100%"
           />
-          <Spacer y={0.5} />
 
           <Spacer y={0.5} />
-          <Input size="mini" width="80%" placeholder="0-24" name="episode">
-            Episode
-          </Input>
+          <div className="ep-rating">
+            <Input
+              className="ep-btn"
+              size="mini"
+              width="90%"
+              label="Episode"
+              placeholder="1"
+              value={input.episode}
+              onChange={handleEpisode}
+            />
+            <Input
+              className="rating-btn"
+              size="mini"
+              label="Rating"
+              placeholder="0-10"
+              value={input.rating}
+              onChange={handleRating}
+            />
+          </div>
+
           <Spacer y={0.5} />
-          <Input
-            size="mini"
-            width="80%"
-            placeholder="Thoughts on the episode?"
+          <Textarea
+            width="100%"
             name="body"
-          >
-            Comments
-          </Input>
+            placeholder="What did you think of the episode? Share your thoughts here ..."
+            value={input.body}
+            onChange={handleBody}
+          />
           <Spacer y={0.5} />
         </form>
 
@@ -94,3 +141,35 @@ export default function CreatePost(props) {
     </div>
   );
 }
+
+const CREATE_POST = gql`
+  mutation createPost(
+    $anime: String!
+    $episode: Int!
+    $rating: Int
+    $body: String
+  ) {
+    createPost(anime: $anime, episode: $episode, rating: $rating, body: $body) {
+      id
+      anime
+      episode
+      rating
+      body
+      createdAt
+      username
+      likes {
+        id
+        username
+        createdAt
+      }
+      likeCount
+      comments {
+        id
+        body
+        username
+        createdAt
+      }
+      commentCount
+    }
+  }
+`;

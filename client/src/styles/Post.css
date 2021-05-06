@@ -8,3 +8,27 @@
   display: flex;
   flex-grow: 1;
 }
+
+.anime-title {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.show-rating {
+  display: flex;
+  justify-content: center !important;
+  font-weight: 400 !important;
+  border-radius: 5px;
+  width: 32px;
+  height: 30px;
+  border: 1px solid;
+  border-color: #a5a5a5;
+}
+
+.show-rating.bad {
+  border-color: #ee0000;
+}
+
+.show-rating.good {
+  border-color: #00ab66;
+}
