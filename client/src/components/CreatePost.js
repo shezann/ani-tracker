@@ -3,8 +3,16 @@
 import React, { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import "../styles/Pages.css";
-import { Input, Spacer, Modal, AutoComplete, Textarea } from "@geist-ui/react";
-import { User, Mail } from "@geist-ui/react-icons";
+import {
+  Input,
+  Spacer,
+  Modal,
+  AutoComplete,
+  Textarea,
+  Note,
+  useToasts,
+} from "@geist-ui/react";
+import { User, Mail, Smile, Frown } from "@geist-ui/react-icons";
 import { useHistory } from "react-router";
 import { CREATE_POST, GET_POSTS } from "../graphql";
 var axios = require("axios");
@@ -25,7 +33,35 @@ export default function CreatePost(props) {
     body: "",
   });
 
-  const [createPost, { loading }] = useMutation(CREATE_POST, {
+  const [toasts, setToast] = useToasts();
+
+  function shareToast(anime, rating) {
+    let msg = "Thanks for sharing!";
+    let type = "";
+    if (rating <= 3) {
+      msg = `Agreed! ${anime} is truly unwatchable.`;
+      type = "error";
+    } else if (rating <= 7) {
+      msg = `I thought, ${anime} was decent. Could've been better tho!`;
+      type = "warning";
+    } else if (rating <= 9) {
+      msg = `Argeed! ${anime} is really good.`;
+      type = "success";
+    } else {
+      msg = `I totally agree! ${anime} is a masterpiece!`;
+      type = "success";
+    }
+
+    const click = (type) =>
+      setToast({
+        text: msg,
+        type,
+        delay: 3000,
+      });
+    click(type);
+  }
+
+  const [createPost, { error }] = useMutation(CREATE_POST, {
     update(proxy, result) {
       //use cache for data
       const data = proxy.readQuery({ query: GET_POSTS });
@@ -34,13 +70,17 @@ export default function CreatePost(props) {
         data: { getPosts: [result.data.createPost, ...data.getPosts] },
       });
 
+      shareToast(input.anime, input.rating);
+
       setInput({
         anime: "",
         episode: "",
         rating: "",
         body: "",
       });
+
       closeHandler();
+
       history.push("/");
     },
     onError(err) {

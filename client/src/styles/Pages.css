@@ -11,7 +11,13 @@
   right: 10%;
   z-index: 99 !important;
 
-  border-radius: 100px !important;
+  border-radius: 50% !important;
+  width: 50px !important;
+  height: 50px !important;
+}
+.fab .icon {
+  position: absolute;
+  top: -17px;
 }
 
 .input-error-msg {

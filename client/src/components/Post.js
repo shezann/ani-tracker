@@ -8,7 +8,6 @@ import {
   User,
   Text,
   Link,
-  Badge,
 } from "@geist-ui/react";
 import { Heart, MessageSquare } from "@geist-ui/react-icons";
 import React from "react";
@@ -35,9 +34,8 @@ export default function Post(props) {
 
   // TODO: make the functions
   function handleLike() {
-    console.log("Liked the post!");
+    console.log("You are about to comment!");
   }
-
   function handleComment() {
     console.log("You are about to comment!");
   }
