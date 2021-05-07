@@ -26,6 +26,31 @@ export const GET_POSTS = gql`
   }
 `;
 
+export const GET_POST = gql`
+  query($postId: ID!) {
+    getPost(postId: $postId) {
+      id
+      anime
+      episode
+      body
+      rating
+      createdAt
+      username
+      likeCount
+      likes {
+        username
+      }
+      comments {
+        id
+        username
+        createdAt
+        body
+      }
+      commentCount
+    }
+  }
+`;
+
 //Mutations
 export const LOGIN_USER = gql`
   mutation login($username: String!, $password: String!) {
@@ -90,6 +115,25 @@ export const CREATE_POST = gql`
         createdAt
       }
       commentCount
+    }
+  }
+`;
+
+export const DELETE_POST = gql`
+  mutation deletePost($postId: ID!) {
+    deletePost(postId: $postId)
+  }
+`;
+
+export const LIKE_POST = gql`
+  mutation likePost($postId: ID!) {
+    likePost(postId: $postId) {
+      id
+      likes {
+        id
+        username
+      }
+      likeCount
     }
   }
 `;

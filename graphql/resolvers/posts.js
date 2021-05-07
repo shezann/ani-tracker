@@ -36,8 +36,8 @@ module.exports = {
       if (!(episode >= 0)) {
         throw new Error("You must enter a valid episode number");
       }
-      if (!(rating >= 0)) {
-        throw new Error("You must enter a valid rating");
+      if (!(0 <= rating <= 10)) {
+        throw new Error("Please rate between 0-10");
       }
 
       const newPost = new Post({

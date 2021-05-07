@@ -49,6 +49,8 @@ export default function Home() {
           setShowCreatePost={setShowCreatePost}
         />
 
+        {/* TODO: make this only visible once user has logged in  */}
+
         <Divider volume={2} y={4} align="center">
           Recent Posts
         </Divider>

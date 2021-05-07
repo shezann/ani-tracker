@@ -15,6 +15,9 @@ import React, { useContext } from "react";
 import "../styles/Post.css";
 import moment from "moment";
 import { AuthContext } from "../context/auth";
+import Like from "./Like";
+
+import Delete from "./Delete";
 
 export default function Post(props) {
   const {
@@ -32,18 +35,11 @@ export default function Post(props) {
 
   const { user } = useContext(AuthContext);
 
-  const { setVisible, bindings } = useModal();
-
   let quality = "";
   rating > 5 ? (quality = "good") : (quality = "bad");
 
   // TODO: make the functions
-  function handleDelete() {
-    console.log("deleting");
-  }
-  function handleLike() {
-    console.log("You are about to comment!");
-  }
+
   function handleComment() {
     console.log("You are about to comment!");
   }
@@ -68,15 +64,8 @@ export default function Post(props) {
           </Link>
         </User>
         <div className="interact-btns">
-          <Button
-            className="interact-btn like"
-            onClick={handleLike}
-            size="small"
-            icon={<Heart />}
-            auto
-          >
-            {likeCount}
-          </Button>
+          {/* FIXME: like btn was here */}
+          <Like user={user} data={{ id, likes, likeCount }} />
 
           <Link href={`/posts/${id}`}>
             <Button
@@ -90,47 +79,7 @@ export default function Post(props) {
             </Button>
           </Link>
 
-          {user && user.username === username && (
-            <div>
-              <Button
-                className="interact-btn del"
-                iconRight={<Trash />}
-                type="error"
-                onClick={() => setVisible(true)}
-                ghost
-                auto
-                size="small"
-              />
-              <div className="modal-content">
-                <Modal width="20rem" {...bindings}>
-                  <Modal.Content>
-                    <h2 style={{ marginBottom: "0px" }}>Delete Post</h2>
-                    <p style={{ marginTop: "0px" }}>
-                      Are you sure you want to delete?
-                    </p>
-                  </Modal.Content>
-                  <div className="modal-btns">
-                    <Button
-                      auto
-                      size="small"
-                      style={{ marginRight: "4px" }}
-                      onClick={() => setVisible(false)}
-                    >
-                      Cancel
-                    </Button>
-                    <Button
-                      auto
-                      size="small"
-                      type="error"
-                      onClick={handleDelete}
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                </Modal>
-              </div>
-            </div>
-          )}
+          <Delete user={user} username={username} postId={id} />
         </div>
       </Card.Footer>
     </Card>

@@ -54,3 +54,8 @@
   display: flex;
   justify-content: flex-start;
 }
+
+/* geist ui icon */
+.like .jsx-3831253408.icon {
+  color: rgb(238, 44, 44) !important;
+}

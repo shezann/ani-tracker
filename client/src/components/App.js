@@ -3,8 +3,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Home from "./Home";
-import Login from "./Login";
-import Register from "./Register";
+import SinglePost from "./SinglePost";
 import "../styles/App.css";
 
 import { AuthProvider } from "../context/auth";
@@ -16,6 +15,7 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Route exact path="/" component={Home} />
+        <Route exact path="/posts/:postId" component={SinglePost} />
       </BrowserRouter>
     </AuthProvider>
   );

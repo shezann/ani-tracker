@@ -36,3 +36,10 @@
 .ep-btn {
   display: flex !important;
 }
+
+.single-post-container {
+  display: block;
+  margin: auto;
+  width: 80%;
+  align-items: center;
+}

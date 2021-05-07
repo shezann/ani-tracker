@@ -91,7 +91,7 @@ export default function CreatePost(props) {
 
   async function search(val) {
     const res = await axios(
-      `https://api.jikan.moe/v3/search/anime?q=${val}&limit=4`
+      `https://api.jikan.moe/v3/search/anime?q=${val}&limit=6`
     );
     const results = await res.data.results;
     setSearchResults(results);
