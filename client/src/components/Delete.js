@@ -16,20 +16,18 @@ export default function Delete(props) {
 
   const history = useHistory();
 
-  //FIXME: this
-
   const [deletePost] = useMutation(DELETE_POST, {
     update(proxy) {
       setVisible(false);
 
       const data = proxy.readQuery({ query: GET_POSTS });
 
+      const newData = data.getPosts.filter((post) => post.id !== postId);
+
       proxy.writeQuery({
         query: GET_POSTS,
-        data: [data.getPosts.filter((post) => post.id !== postId)],
+        data: { getPosts: newData },
       });
-
-      console.log(data);
     },
     variables: {
       postId,
