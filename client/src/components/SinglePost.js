@@ -59,7 +59,7 @@ export default function SinglePost(props) {
     } = getPost;
 
     output = (
-      <div className="single-post-container">
+      <div>
         <h1>{anime}</h1>
         <h2>{episode}</h2>
         <p>{body}</p>
@@ -103,15 +103,17 @@ export default function SinglePost(props) {
   return (
     <div>
       <Navbar />
-      {output}
-      <Textarea
-        width="50%"
-        placeholder="Comment here"
-        minHeight="20px"
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-      />
-      <Button onClick={handleCommentSubmit}>Submit</Button>
+      <div className="single-post-container">
+        {output}
+        <Textarea
+          width="50%"
+          placeholder="Comment here"
+          minHeight="20px"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+        <Button onClick={handleCommentSubmit}>Submit</Button>
+      </div>
     </div>
   );
 }
