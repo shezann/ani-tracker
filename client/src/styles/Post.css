@@ -3,6 +3,16 @@
   justify-content: space-between;
   padding: 2pt 4pt !important;
 }
+.interact-btns {
+  display: flex;
+  justify-content: space-between;
+}
+.interact-btn {
+  margin-left: 4px !important;
+}
+.auto-margin.jsx-520943018 * {
+  margin-right: 0 !important;
+}
 
 .post {
   display: flex;
@@ -31,4 +41,16 @@
 
 .show-rating.good {
   border-color: #00ab66;
+}
+
+.content.jsx-891583295 {
+  margin: 0 -16pt;
+  padding: 0pt 16pt 8pt !important;
+  position: relative;
+  text-align: left;
+}
+
+.modal-btns {
+  display: flex;
+  justify-content: flex-start;
 }

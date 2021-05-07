@@ -1,19 +1,20 @@
 /* eslint-disable */
 
 import {
-  Row,
+  Modal,
   Card,
   Button,
   Description,
   User,
   Text,
   Link,
+  useModal,
 } from "@geist-ui/react";
-import { Heart, MessageSquare } from "@geist-ui/react-icons";
-import React from "react";
+import { Heart, MessageSquare, Trash, Power } from "@geist-ui/react-icons";
+import React, { useContext } from "react";
 import "../styles/Post.css";
 import moment from "moment";
-//import { Link } from "react-router-dom";
+import { AuthContext } from "../context/auth";
 
 export default function Post(props) {
   const {
@@ -29,10 +30,17 @@ export default function Post(props) {
     likes,
   } = props.post;
 
+  const { user } = useContext(AuthContext);
+
+  const { setVisible, bindings } = useModal();
+
   let quality = "";
   rating > 5 ? (quality = "good") : (quality = "bad");
 
   // TODO: make the functions
+  function handleDelete() {
+    console.log("deleting");
+  }
   function handleLike() {
     console.log("You are about to comment!");
   }
@@ -60,17 +68,69 @@ export default function Post(props) {
           </Link>
         </User>
         <div className="interact-btns">
-          <Button onClick={handleLike} size="small" icon={<Heart />} auto>
-            {likeCount}
-          </Button>
           <Button
-            onClick={handleComment}
+            className="interact-btn like"
+            onClick={handleLike}
             size="small"
-            icon={<MessageSquare />}
+            icon={<Heart />}
             auto
           >
-            {commentCount}
+            {likeCount}
           </Button>
+
+          <Link href={`/posts/${id}`}>
+            <Button
+              className="interact-btn comment"
+              onClick={handleComment}
+              size="small"
+              icon={<MessageSquare />}
+              auto
+            >
+              {commentCount}
+            </Button>
+          </Link>
+
+          {user && user.username === username && (
+            <div>
+              <Button
+                className="interact-btn del"
+                iconRight={<Trash />}
+                type="error"
+                onClick={() => setVisible(true)}
+                ghost
+                auto
+                size="small"
+              />
+              <div className="modal-content">
+                <Modal width="20rem" {...bindings}>
+                  <Modal.Content>
+                    <h2 style={{ marginBottom: "0px" }}>Delete Post</h2>
+                    <p style={{ marginTop: "0px" }}>
+                      Are you sure you want to delete?
+                    </p>
+                  </Modal.Content>
+                  <div className="modal-btns">
+                    <Button
+                      auto
+                      size="small"
+                      style={{ marginRight: "4px" }}
+                      onClick={() => setVisible(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      auto
+                      size="small"
+                      type="error"
+                      onClick={handleDelete}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </Modal>
+              </div>
+            </div>
+          )}
         </div>
       </Card.Footer>
     </Card>
