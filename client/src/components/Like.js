@@ -6,7 +6,7 @@ import { useMutation } from "@apollo/client";
 import gql from "graphql-tag";
 import { LIKE_POST } from "../graphql";
 
-import '../styles/Post.css'
+import "../styles/Post.css";
 
 export default function Like(props) {
   const { id, likeCount, likes } = props.data;

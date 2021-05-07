@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import { Loading, Row } from "@geist-ui/react";
+import React, { useContext, useState } from "react";
+import { Loading, Row, Note, Textarea, Button } from "@geist-ui/react";
 
-import { GET_POST } from "../graphql";
-import { useQuery } from "@apollo/client";
+import { GET_POST, CREATE_COMMENT } from "../graphql";
+import { useQuery, useMutation } from "@apollo/client";
 
 import { AuthContext } from "../context/auth";
 import moment from "moment";
@@ -13,7 +13,7 @@ import Delete from "./Delete";
 
 export default function SinglePost(props) {
   const postId = props.match.params.postId;
-
+  const [comment, setComment] = useState("");
   const { user } = useContext(AuthContext);
 
   const { data: { getPost } = {} } = useQuery(GET_POST, {
@@ -21,6 +21,21 @@ export default function SinglePost(props) {
       postId,
     },
   });
+
+  const [createComment] = useMutation(CREATE_COMMENT, {
+    update() {
+      setComment("");
+    },
+    variables: {
+      postId,
+      body: comment,
+    },
+  });
+
+  function handleCommentSubmit() {
+    createComment();
+    setComment("");
+  }
 
   let output;
   if (!getPost) {
@@ -49,9 +64,36 @@ export default function SinglePost(props) {
         <h2>{episode}</h2>
         <p>{body}</p>
         <p>{username}</p>
+
+        {comments.map((comment) => (
+          <div key={comment.id}>
+            <Note>
+              <p>{comment.username}</p>
+
+              {user && user.username === comment.username && (
+                <div>
+                  <Delete
+                    user={user}
+                    username={username}
+                    postId={id}
+                    commentId={comment.id}
+                  />
+                </div>
+              )}
+              <p>{moment(createdAt).fromNow(true)}</p>
+              <p>{comment.body}</p>
+            </Note>
+          </div>
+        ))}
+
         <Like user={user} data={{ id, likes, likeCount }} />
 
-        <Delete user={user} username={username} postId={id} />
+        <Delete
+          user={user}
+          username={username}
+          postId={id}
+          atSinglePost={true}
+        />
 
         <p> {moment(createdAt).fromNow(false)}</p>
       </div>
@@ -62,6 +104,14 @@ export default function SinglePost(props) {
     <div>
       <Navbar />
       {output}
+      <Textarea
+        width="50%"
+        placeholder="Comment here"
+        minHeight="20px"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+      />
+      <Button onClick={handleCommentSubmit}>Submit</Button>
     </div>
   );
 }
