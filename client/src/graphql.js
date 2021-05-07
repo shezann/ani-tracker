@@ -9,6 +9,7 @@ export const GET_POSTS = gql`
       episode
       rating
       body
+      mal_id
       username
       createdAt
       likeCount
@@ -33,6 +34,7 @@ export const GET_POST = gql`
       anime
       episode
       body
+      mal_id
       rating
       createdAt
       username
@@ -93,13 +95,21 @@ export const CREATE_POST = gql`
     $episode: Int!
     $rating: Int
     $body: String
+    $mal_id: Int!
   ) {
-    createPost(anime: $anime, episode: $episode, rating: $rating, body: $body) {
+    createPost(
+      anime: $anime
+      episode: $episode
+      rating: $rating
+      body: $body
+      mal_id: $mal_id
+    ) {
       id
       anime
       episode
       rating
       body
+      mal_id
       createdAt
       username
       likes {

@@ -25,6 +25,7 @@ export default function Post(props) {
     anime,
     episode,
     rating,
+    mal_id,
     body,
     username,
     createdAt,

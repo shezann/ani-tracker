@@ -6,6 +6,7 @@ const postSchema = new Schema({
   episode: Number,
   rating: Number,
   body: String,
+  mal_id: Number,
   username: String,
   createdAt: String,
   comments: [

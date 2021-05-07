@@ -7,6 +7,7 @@ module.exports = gql`
     episode: Int!
     rating: Int
     body: String
+    mal_id: Int!
     createdAt: String!
     username: String!
     comments: [Comment]!
@@ -45,7 +46,13 @@ module.exports = gql`
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(username: String!, password: String!): User!
-    createPost(anime: String!, episode: Int!, rating: Int, body: String): Post!
+    createPost(
+      anime: String!
+      episode: Int!
+      rating: Int
+      body: String
+      mal_id: Int!
+    ): Post!
     deletePost(postId: ID!): String!
     createComment(postId: ID!, body: String!): Post!
     deleteComment(postId: ID!, commentId: ID!): Post!

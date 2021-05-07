@@ -1,0 +1,31 @@
+.single-post-container {
+  display: block;
+  margin: auto;
+  width: 80%;
+  align-items: center;
+}
+
+.post-content {
+  padding-top: 20px;
+  display: flex;
+}
+
+.cover-art {
+  width: 200px;
+  box-shadow: 0 30px 60px rgb(0 0 0 / 12%);
+  border-radius: 5px;
+  margin-top: 16px;
+}
+/* add media queries for cover art on phone */
+
+.post-text {
+  padding-left: 20px;
+}
+.post-text h1 {
+  margin-bottom: 0;
+}
+.post-text span {
+  color: #666666;
+  font-weight: 600;
+  margin-top: 0px;
+}

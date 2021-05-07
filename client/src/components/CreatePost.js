@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import "../styles/Pages.css";
 import {
@@ -7,13 +7,8 @@ import {
   Modal,
   AutoComplete,
   Textarea,
-  Text,
-  Badge,
-  Image,
-  Grid,
   useToasts,
 } from "@geist-ui/react";
-import { User, Mail, Smile, Frown } from "@geist-ui/react-icons";
 import { useHistory } from "react-router";
 import { CREATE_POST, GET_POSTS } from "../graphql";
 var axios = require("axios");
@@ -32,6 +27,7 @@ export default function CreatePost(props) {
     episode: "",
     rating: "",
     body: "",
+    mal_id: "",
   });
 
   const [toasts, setToast] = useToasts();
@@ -72,13 +68,6 @@ export default function CreatePost(props) {
       });
 
       shareToast(input.anime, input.rating);
-
-      setInput({
-        anime: "",
-        episode: "",
-        rating: "",
-        body: "",
-      });
 
       closeHandler();
 
@@ -135,13 +124,35 @@ export default function CreatePost(props) {
     );
     setOptions(customOptions);
 
+    //FIXME: why is it one character behind aaaaa
+    console.log(currentValue);
     setInput({ ...input, anime: currentValue });
   };
 
   function handleSubmit() {
     createPost();
+    setInput({
+      anime: "",
+      episode: "",
+      rating: "",
+      body: "",
+      mal_id: "",
+    });
   }
 
+  function handleAnime(event) {
+    setInput({ ...input, anime: event });
+
+    // TODO: filter through the search results with current value and keep storing the id
+    const selectedMalId = searchResults.filter((anime) =>
+      anime.title.includes(input.anime)
+    );
+
+    if (selectedMalId.length > 0) {
+      const mal_id = selectedMalId[0].mal_id;
+      setInput({ ...input, mal_id: mal_id });
+    }
+  }
   function handleEpisode(event) {
     const regEx = /^\d{0,3}$/;
     if (event.target.value.match(regEx)) {
@@ -184,6 +195,8 @@ export default function CreatePost(props) {
             placeholder="Which anime did you watch?"
             onSearch={searchHandler}
             width="100%"
+            disableFreeSolo
+            onChange={handleAnime}
           />
 
           <Spacer y={0.5} />

@@ -27,7 +27,7 @@ module.exports = {
     },
   },
   Mutation: {
-    async createPost(_, { anime, episode, rating, body }, context) {
+    async createPost(_, { mal_id, anime, episode, rating, body }, context) {
       const user = checkAuth(context);
 
       if (anime.trim() === "") {
@@ -41,6 +41,7 @@ module.exports = {
       }
 
       const newPost = new Post({
+        mal_id: mal_id,
         anime: anime,
         episode: episode,
         rating: rating,
