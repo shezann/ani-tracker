@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import "../styles/Pages.css";
@@ -9,7 +7,10 @@ import {
   Modal,
   AutoComplete,
   Textarea,
-  Note,
+  Text,
+  Badge,
+  Image,
+  Grid,
   useToasts,
 } from "@geist-ui/react";
 import { User, Mail, Smile, Frown } from "@geist-ui/react-icons";
@@ -102,15 +103,37 @@ export default function CreatePost(props) {
     if (!currentValue) return setOptions([]);
     setSearching(true);
 
-    const animeNames = searchResults.map((x) => {
-      return { label: x.title, value: x.title };
+    //make custom option with images
+    const makeOption = (label, value, image_url, episodes) => (
+      <AutoComplete.Option value={value}>
+        <div className="search-result">
+          <img className="search-img" src={image_url} alt={"img_anime.jpg"} />
+          <div className="search-text">
+            <h4>{label}</h4>
+            <p>{episodes} episodes</p>{" "}
+          </div>
+        </div>
+      </AutoComplete.Option>
+    );
+
+    const options = searchResults.map((x) => {
+      return {
+        label: x.title,
+        value: x.title,
+        image_url: x.image_url,
+        episodes: x.episodes,
+      };
     });
 
+    //because MAL only searches after 3 min characters
     if (currentValue.length > 2) {
       search(currentValue);
     }
 
-    setOptions(animeNames);
+    const customOptions = options.map(({ label, value, image_url, episodes }) =>
+      makeOption(label, value, image_url, episodes)
+    );
+    setOptions(customOptions);
 
     setInput({ ...input, anime: currentValue });
   };

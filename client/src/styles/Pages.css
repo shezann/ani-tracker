@@ -43,3 +43,25 @@
   width: 80%;
   align-items: center;
 }
+
+.search-result {
+  display: flex;
+  height: 45px !important;
+  padding: 5px !important;
+  margin-bottom: 0px;
+}
+.search-text h4 {
+  margin-top: -5px !important;
+  margin-bottom: 0 !important;
+}
+.search-text p {
+  margin-top: 0px !important;
+  color: #666666 !important;
+  margin-bottom: 0 !important;
+}
+.search-img {
+  width: 40px !important;
+  object-fit: cover;
+  margin-right: 10px !important;
+  border-radius: 5px !important;
+}

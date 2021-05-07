@@ -60,10 +60,20 @@ export default function SinglePost(props) {
 
     output = (
       <div>
-        <h1>{anime}</h1>
-        <h2>{episode}</h2>
-        <p>{body}</p>
-        <p>{username}</p>
+        <div className="single-post">
+          <h1>{anime}</h1>
+          <h2>{episode}</h2>
+          <p>{body}</p>
+          <p>from {username}</p>
+          <Like user={user} data={{ id, likes, likeCount }} />
+          <Delete
+            user={user}
+            username={username}
+            postId={id}
+            atSinglePost={true}
+          />
+          <p> {moment(createdAt).fromNow(false)}</p>
+        </div>
 
         {comments.map((comment) => (
           <div key={comment.id}>
@@ -85,17 +95,6 @@ export default function SinglePost(props) {
             </Note>
           </div>
         ))}
-
-        <Like user={user} data={{ id, likes, likeCount }} />
-
-        <Delete
-          user={user}
-          username={username}
-          postId={id}
-          atSinglePost={true}
-        />
-
-        <p> {moment(createdAt).fromNow(false)}</p>
       </div>
     );
   }
