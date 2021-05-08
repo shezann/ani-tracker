@@ -11,7 +11,6 @@ import { GET_POST, CREATE_COMMENT } from "../graphql";
 import { useQuery, useMutation } from "@apollo/client";
 import { AuthContext } from "../context/auth";
 import moment from "moment";
-import { get } from "mongoose";
 var axios = require("axios");
 
 export default function SinglePost(props) {
@@ -22,6 +21,9 @@ export default function SinglePost(props) {
   const { user } = useContext(AuthContext);
 
   const [coverUrl, setCoverUrl] = useState("");
+  const [synopsis, setSynopsis] = useState(
+    "Since he was a child, the ambitious middle schooler has wanted nothing more than to be a hero. Izuku's unfair fate leaves him admiring heroes and taking notes on them whenever he can. But it seems that his persistence has borne some fruit: Izuku meets the number one hero and his personal idol, All Might. All Might's quirk is a unique ability that can be inherited, and he has chosen Izuku to be his successor!"
+  );
 
   const { data: { getPost } = {} } = useQuery(GET_POST, {
     variables: {
@@ -56,6 +58,7 @@ export default function SinglePost(props) {
       id,
       anime,
       mal_id,
+      rating,
       episode,
       body,
       comments,
@@ -76,30 +79,58 @@ export default function SinglePost(props) {
     const request_url = `https://api.jikan.moe/v3/anime/${mal_id}/`;
     getCover(request_url);
 
+    //TODO: get synopsis from api
+
     output = (
       <div>
         <div className="single-post">
           <div className="post-content">
-            <img className="cover-art" src={coverUrl} alt="cover_art.jpg" />
-            <div className="post-text">
-              <h1>{anime}</h1>
-              <span>EPISODE: {episode}</span>
-              <p>{body}</p>
+            <div className="post-header">
+              {/* TODO: update link later */}
+              <img
+                className="cover-art"
+                src="https://cdn.myanimelist.net/images/anime/1911/113611l.jpg"
+                alt="cover_art.jpg"
+              />
+              <div className="text">
+                <h1>{anime}</h1>
+                <span>EPISODE: {episode}</span>
+                <p>{synopsis}</p>
+              </div>
             </div>
+
+            {/* TODO: show the main post here */}
           </div>
 
-          <p>from {username}</p>
-          <Like user={user} data={{ id, likes, likeCount }} />
-          <Delete
-            user={user}
-            username={username}
-            postId={id}
-            atSinglePost={true}
-          />
-          <Button auto ghost type="secondary" onClick={() => history.push("/")}>
-            BACK
-          </Button>
-          <p> {moment(createdAt).fromNow(false)}</p>
+          <div className="review-box">
+            <div className="review-rating">{rating}</div>
+
+            <div className="review-text">
+              <h1>{username}'s review</h1>
+              <p>{body}</p>
+
+              <div className="review-buttons">
+                <Like user={user} data={{ id, likes, likeCount }} />
+                <Delete
+                  user={user}
+                  username={username}
+                  postId={id}
+                  atSinglePost={true}
+                />
+                <Button
+                  auto
+                  ghost
+                  size="small"
+                  type="secondary"
+                  onClick={() => history.push("/")}
+                >
+                  BACK
+                </Button>
+              </div>
+
+              <p> {moment(createdAt).fromNow(false)}</p>
+            </div>
+          </div>
         </div>
 
         {comments.map((comment) => (

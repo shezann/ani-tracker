@@ -5,6 +5,11 @@
   align-items: center;
 }
 
+.single-post {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .post-content {
   padding-top: 20px;
   display: flex;
@@ -18,14 +23,23 @@
 }
 /* add media queries for cover art on phone */
 
-.post-text {
-  padding-left: 20px;
+.post-header {
+  display: flex;
 }
-.post-text h1 {
-  margin-bottom: 0;
+.post-header .text {
+  margin-left: 20px;
+  justify-content: flex-end;
 }
-.post-text span {
-  color: #666666;
-  font-weight: 600;
-  margin-top: 0px;
+
+.review-rating {
+  background-color: red;
+}
+.review-box {
+  background-color: aqua;
+
+  width: 469px;
+  height: 347px;
+}
+.review-buttons {
+  display: flex;
 }
