@@ -30,7 +30,7 @@ export default function CreatePost(props) {
     mal_id: "",
   });
 
-  const [toasts, setToast] = useToasts();
+  const [, setToast] = useToasts();
 
   function shareToast(anime, rating) {
     let msg = "Thanks for sharing!";
@@ -58,7 +58,7 @@ export default function CreatePost(props) {
     click(type);
   }
 
-  const [createPost, { error }] = useMutation(CREATE_POST, {
+  const [createPost] = useMutation(CREATE_POST, {
     update(proxy, result) {
       //use cache for data
       const data = proxy.readQuery({ query: GET_POSTS });
@@ -68,6 +68,14 @@ export default function CreatePost(props) {
       });
 
       shareToast(input.anime, input.rating);
+
+      setInput({
+        anime: "",
+        episode: "",
+        rating: "",
+        body: "",
+        mal_id: "",
+      });
 
       closeHandler();
 
@@ -124,26 +132,16 @@ export default function CreatePost(props) {
     );
     setOptions(customOptions);
 
-    //FIXME: why is it one character behind aaaaa
-    console.log(currentValue);
     setInput({ ...input, anime: currentValue });
   };
 
   function handleSubmit() {
     createPost();
-    setInput({
-      anime: "",
-      episode: "",
-      rating: "",
-      body: "",
-      mal_id: "",
-    });
   }
 
   function handleAnime(event) {
     setInput({ ...input, anime: event });
 
-    // TODO: filter through the search results with current value and keep storing the id
     const selectedMalId = searchResults.filter((anime) =>
       anime.title.includes(input.anime)
     );

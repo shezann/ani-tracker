@@ -11,6 +11,8 @@ import { GET_POST, CREATE_COMMENT } from "../graphql";
 import { useQuery, useMutation } from "@apollo/client";
 import { AuthContext } from "../context/auth";
 import moment from "moment";
+import { get } from "mongoose";
+var axios = require("axios");
 
 export default function SinglePost(props) {
   const history = useHistory();
@@ -18,6 +20,8 @@ export default function SinglePost(props) {
   const postId = props.match.params.postId;
   const [comment, setComment] = useState("");
   const { user } = useContext(AuthContext);
+
+  const [coverUrl, setCoverUrl] = useState("");
 
   const { data: { getPost } = {} } = useQuery(GET_POST, {
     variables: {
@@ -62,17 +66,21 @@ export default function SinglePost(props) {
       createdAt,
     } = getPost;
 
-    // TODO: get cover image from api using anime id
-    // FIXME: don't forget to add l
-    console.log(mal_id);
-    const cover_url =
-      "https://cdn.myanimelist.net/images/anime/1319/92084l.jpg";
+    //get cover image from api using anime id
+    async function getCover(request_url) {
+      const res = await axios(request_url);
+      const image_url = await res.data.image_url.replace(".jpg", "l.jpg");
+      setCoverUrl(image_url);
+    }
+
+    const request_url = `https://api.jikan.moe/v3/anime/${mal_id}/`;
+    getCover(request_url);
 
     output = (
       <div>
         <div className="single-post">
           <div className="post-content">
-            <img className="cover-art" src={cover_url} alt="cover_art.jpg" />
+            <img className="cover-art" src={coverUrl} alt="cover_art.jpg" />
             <div className="post-text">
               <h1>{anime}</h1>
               <span>EPISODE: {episode}</span>
