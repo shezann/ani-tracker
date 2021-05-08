@@ -1,5 +1,19 @@
+/* eslint-disable */
+
 import React, { useContext, useState } from "react";
-import { Loading, Row, Note, Textarea, Button } from "@geist-ui/react";
+import {
+  Loading,
+  Row,
+  Note,
+  Textarea,
+  Button,
+  useMediaQuery,
+  Divider,
+  Tag,
+  Link,
+} from "@geist-ui/react";
+import { ChevronLeft } from "@geist-ui/react-icons";
+
 import "../styles/SinglePost.css";
 import Navbar from "./Navbar";
 import Like from "./Like";
@@ -16,14 +30,24 @@ var axios = require("axios");
 export default function SinglePost(props) {
   const history = useHistory();
 
+  const isXS = useMediaQuery("xs");
+
   const postId = props.match.params.postId;
   const [comment, setComment] = useState("");
   const { user } = useContext(AuthContext);
 
+  //data about the anime
   const [coverUrl, setCoverUrl] = useState("");
-  const [synopsis, setSynopsis] = useState(
-    "Since he was a child, the ambitious middle schooler has wanted nothing more than to be a hero. Izuku's unfair fate leaves him admiring heroes and taking notes on them whenever he can. But it seems that his persistence has borne some fruit: Izuku meets the number one hero and his personal idol, All Might. All Might's quirk is a unique ability that can be inherited, and he has chosen Izuku to be his successor!"
-  );
+  const [animeData, setAnimeData] = useState({
+    synopsis:
+      "The appearance of \"quirks,\" newly discovered super powers, has been steadily increasing over the years, with 80 percent of humanity possessing various abilities from manipulation of elements to shapeshifting. This leaves the remainder of the world completely powerless, and Izuku Midoriya is one such individual. Since he was a child, the ambitious middle schooler has wanted nothing more than to be a hero. Izuku's unfair fate leaves him admiring heroes and taking notes on them whenever he can. But it seems that his persistence has borne some fruit: Izuku meets the number one hero and his personal idol, All Might. All Might's quirk is a unique ability that can be inherited, and he has chosen Izuku to be his successor! Enduring many months of grueling training, Izuku enrolls in UA High, a prestigious high school famous for its excellent hero training program, and this year's freshmen look especially promising. With his bizarre but talented classmates and the looming threat of a villainous organization, Izuku will soon learn what it really means to be a hero.",
+    episodes: 13,
+    score: 8.32,
+    rank: 307,
+    premiered: "Spring 2016",
+    title_english: "My Hero Academia",
+    url: "https://myanimelist.net/anime/31964/Boku_no_Hero_Academia",
+  });
 
   const { data: { getPost } = {} } = useQuery(GET_POST, {
     variables: {
@@ -72,17 +96,38 @@ export default function SinglePost(props) {
     //get cover image from api using anime id
     async function getCover(request_url) {
       const res = await axios(request_url);
+      console.log(JSON.stringify(res.data));
       const image_url = await res.data.image_url.replace(".jpg", "l.jpg");
       setCoverUrl(image_url);
     }
 
-    const request_url = `https://api.jikan.moe/v3/anime/${mal_id}/`;
-    getCover(request_url);
+    const request_url = `https://api.jikan.moe/v3/anime/${mal_id}`;
+    //getCover(request_url);
 
     //TODO: get synopsis from api
 
     output = (
       <div>
+        {isXS ? (
+          <Button
+            auto
+            size="mini"
+            type="secondary"
+            onClick={() => history.push("/")}
+            iconRight={<ChevronLeft />}
+            className="back-btn"
+          />
+        ) : (
+          <Button
+            auto
+            size="small"
+            type="secondary"
+            onClick={() => history.push("/")}
+            className="back-btn"
+          >
+            BACK
+          </Button>
+        )}
         <div className="single-post">
           <div className="post-content">
             <div className="post-header">
@@ -92,10 +137,41 @@ export default function SinglePost(props) {
                 src="https://cdn.myanimelist.net/images/anime/1911/113611l.jpg"
                 alt="cover_art.jpg"
               />
-              <div className="text">
-                <h1>{anime}</h1>
-                <span>EPISODE: {episode}</span>
-                <p>{synopsis}</p>
+              <div className="anime-data-container">
+                <div className="anime-data">
+                  <h1>
+                    <Link href={animeData.url}>{anime}</Link>
+                  </h1>
+
+                  <Tag className="tag" type="success" invert>
+                    Score: {animeData.score}
+                  </Tag>
+                  <Tag className="tag" type="secondary">
+                    Rank: {animeData.rank}
+                  </Tag>
+                  <Tag className="tag" type="secondary">
+                    Episodes: {animeData.episodes}
+                  </Tag>
+
+                  <Divider style={{ marginBottom: "6px" }} />
+
+                  <h4>Synopsis</h4>
+                  <p>{animeData.synopsis}</p>
+
+                  <Divider style={{ marginBottom: "6px" }} />
+                  <div className="anime-data-footer">
+                    <Tag className="tag bottom" type="secondary">
+                      Aired: {animeData.premiered}
+                    </Tag>
+                    <Link
+                      style={{ fontSize: "14px" }}
+                      href={animeData.url}
+                      color
+                    >
+                      data from MyAnimeList
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -117,15 +193,6 @@ export default function SinglePost(props) {
                   postId={id}
                   atSinglePost={true}
                 />
-                <Button
-                  auto
-                  ghost
-                  size="small"
-                  type="secondary"
-                  onClick={() => history.push("/")}
-                >
-                  BACK
-                </Button>
               </div>
 
               <p> {moment(createdAt).fromNow(false)}</p>

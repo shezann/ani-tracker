@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import React, { useState, useEffect } from "react";
 import { Link, Button } from "@geist-ui/react";
 import { Heart, HeartFill } from "@geist-ui/react-icons";

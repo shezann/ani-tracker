@@ -15,20 +15,52 @@
   display: flex;
 }
 
+.back-btn {
+  position: fixed !important;
+  bottom: 5%;
+  right: 10%;
+  z-index: 99 !important;
+}
+
 .cover-art {
-  width: 200px;
+  width: 25vw;
   box-shadow: 0 30px 60px rgb(0 0 0 / 12%);
   border-radius: 5px;
   margin-top: 16px;
+  object-fit: cover;
 }
 /* add media queries for cover art on phone */
 
 .post-header {
   display: flex;
+  margin-bottom: 30px;
 }
-.post-header .text {
+.anime-data-container {
   margin-left: 20px;
-  justify-content: flex-end;
+  display: flex;
+  align-items: flex-end;
+}
+.anime-data {
+  margin-bottom: 10px;
+}
+.anime-data h1 {
+  margin-bottom: 0px;
+}
+.anime-data h4 {
+  margin-bottom: 0px;
+}
+.tag {
+  margin-right: 5px;
+}
+.anime-data p {
+  font-size: 10pt;
+  color: #666666;
+  margin-top: 0px;
+}
+.anime-data-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .review-rating {
@@ -42,4 +74,59 @@
 }
 .review-buttons {
   display: flex;
+}
+
+@media only screen and (max-width: 420px) {
+  .post-header {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .cover-art {
+    width: 300px;
+    box-shadow: 0 30px 60px rgb(0 0 0 / 12%);
+    border-radius: 5px;
+    margin-top: 16px;
+    object-fit: cover;
+  }
+  .post-header {
+    display: flex;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .anime-data p {
+    font-size: 8pt;
+    color: #666666;
+    margin-top: 0px;
+  }
+}
+
+@media only screen and (max-width: 780px) {
+  .post-header {
+    display: flex;
+    flex-direction: column;
+  }
+  .cover-art {
+    width: 100%;
+    box-shadow: 0 30px 60px rgb(0 0 0 / 6%);
+    border-radius: 5px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    object-fit: cover;
+  }
+  .anime-data h1 {
+    font-size: 2rem;
+    margin-bottom: 6px;
+  }
+  .anime-data h4 {
+    margin-bottom: 6px;
+  }
+
+  .tag {
+    margin-right: 5px;
+    font-size: 10px !important;
+  }
 }
