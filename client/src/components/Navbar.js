@@ -14,7 +14,6 @@ export default function Navbar() {
 
   const { user, logout } = useContext(AuthContext);
   // TODO: use user.avatar_url here instead and if it's empty use the alt tag
-  console.log(user);
 
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);

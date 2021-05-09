@@ -7,6 +7,8 @@ import { Grid, Divider, Row, Loading, Button } from "@geist-ui/react";
 import { Plus } from "@geist-ui/react-icons";
 
 import Post from "../Post";
+import Info from "./Info";
+
 import { AuthContext } from "../../context/auth";
 import { GET_POSTS } from "../../graphql";
 
@@ -46,26 +48,31 @@ export default function Home() {
         />
 
         {/* TODO: make this only visible once user has logged in  */}
-
-        <Divider volume={2} y={4} align="center">
-          Recent Posts
-        </Divider>
-        {loading ? (
-          <Row style={{ padding: "10px 0" }}>
-            <Loading />
-          </Row>
-        ) : (
-          //since loading is done we can display the posts here
-          <div>
-            <Grid.Container gap={2} justify="flex-start">
-              {posts &&
-                posts.map((post) => (
-                  <Grid key={post.id} xs={24} md={12} lg={8}>
-                    <Post post={post} />
-                  </Grid>
-                ))}
-            </Grid.Container>
+        {user ? (
+          <div className="loggedin-post-container">
+            <Divider volume={2} y={4} align="center">
+              Recent Posts
+            </Divider>
+            {loading ? (
+              <Row style={{ padding: "10px 0" }}>
+                <Loading />
+              </Row>
+            ) : (
+              //since loading is done we can display the posts here
+              <div>
+                <Grid.Container gap={2} justify="flex-start">
+                  {posts &&
+                    posts.map((post) => (
+                      <Grid key={post.id} xs={24} md={12} lg={8}>
+                        <Post post={post} />
+                      </Grid>
+                    ))}
+                </Grid.Container>
+              </div>
+            )}
           </div>
+        ) : (
+          <Info />
         )}
       </div>
     </div>
