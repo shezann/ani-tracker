@@ -5,9 +5,9 @@ import { Trash } from "@geist-ui/react-icons";
 import { useHistory } from "react-router";
 
 import { useMutation } from "@apollo/client";
-import { DELETE_COMMENT, DELETE_POST } from "../graphql";
+import { DELETE_COMMENT, DELETE_POST } from "../../graphql";
 
-import { GET_POSTS } from "../graphql";
+import { GET_POSTS } from "../../graphql";
 
 export default function Delete(props) {
   const user = props.user;

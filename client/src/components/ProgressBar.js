@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import { Progress, useTheme } from "@geist-ui/react";
+import React from "react";
+import { Progress } from "@geist-ui/react";
 
 export default function ProgressBar(props) {
   const { currentEpisode, totalEpisodes } = props;
 
-  const theme = useTheme();
   const colors = {
     20: "#000",
     40: "#000",

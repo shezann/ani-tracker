@@ -1,16 +1,12 @@
-/* eslint-disable */
-
-import React, { useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import Home from "./Home";
-import SinglePost from "./SinglePost";
+import React from "react";
+import { BrowserRouter, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import SinglePost from "./pages/SinglePost";
 import "../styles/App.css";
 
 import { AuthProvider } from "../context/auth";
 
 function App() {
-  const pathname = window.location.pathname;
-
   return (
     <AuthProvider>
       <BrowserRouter>

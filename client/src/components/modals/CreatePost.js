@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
-import "../styles/Pages.css";
+import "../../styles/Pages.css";
 import {
   Input,
   Spacer,
@@ -10,7 +10,7 @@ import {
   useToasts,
 } from "@geist-ui/react";
 import { useHistory } from "react-router";
-import { CREATE_POST, GET_POSTS } from "../graphql";
+import { CREATE_POST, GET_POSTS } from "../../graphql";
 var axios = require("axios");
 
 export default function CreatePost(props) {

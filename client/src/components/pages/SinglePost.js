@@ -2,31 +2,28 @@ import React, { useContext, useState } from "react";
 import {
   Loading,
   Row,
-  Note,
   Textarea,
   User,
   Button,
   useMediaQuery,
   Divider,
   Card,
-  Tag,
-  Link,
   Spacer,
 } from "@geist-ui/react";
 import { ChevronLeft } from "@geist-ui/react-icons";
-import ProgressBar from "./ProgressBar";
+import ProgressBar from "../ProgressBar";
 
-import "../styles/SinglePost.css";
-import Navbar from "./Navbar";
-import Like from "./Like";
-import Delete from "./Delete";
-import AnimeInfo from "./AnimeInfo";
+import "../../styles/SinglePost.css";
+import Navbar from "../Navbar";
+import Like from "../buttons/Like";
+import Delete from "../buttons/Delete";
+import AnimeInfo from "../AnimeInfo";
 
 import { useHistory } from "react-router";
 
-import { GET_POST, CREATE_COMMENT } from "../graphql";
+import { GET_POST, CREATE_COMMENT } from "../../graphql";
 import { useQuery, useMutation } from "@apollo/client";
-import { AuthContext } from "../context/auth";
+import { AuthContext } from "../../context/auth";
 import moment from "moment";
 var axios = require("axios");
 
@@ -42,15 +39,15 @@ export default function SinglePost(props) {
 
   //data about the anime
   const [coverUrl, setCoverUrl] = useState("");
+  const [loading, setLoading] = useState(true);
   const [animeData, setAnimeData] = useState({
-    synopsis:
-      "The appearance of \"quirks,\" newly discovered super powers, has been steadily increasing over the years, with 80 percent of humanity possessing various abilities from manipulation of elements to shapeshifting. This leaves the remainder of the world completely powerless, and Izuku Midoriya is one such individual. Since he was a child, the ambitious middle schooler has wanted nothing more than to be a hero. Izuku's unfair fate leaves him admiring heroes and taking notes on them whenever he can. But it seems that his persistence has borne some fruit: Izuku meets the number one hero and his personal idol, All Might. All Might's quirk is a unique ability that can be inherited, and he has chosen Izuku to be his successor! Enduring many months of grueling training, Izuku enrolls in UA High, a prestigious high school famous for its excellent hero training program, and this year's freshmen look especially promising. With his bizarre but talented classmates and the looming threat of a villainous organization, Izuku will soon learn what it really means to be a hero.",
-    episodes: 13,
-    score: 8.32,
-    rank: 307,
-    premiered: "Spring 2016",
-    title_english: "My Hero Academia",
-    url: "https://myanimelist.net/anime/31964/Boku_no_Hero_Academia",
+    synopsis: "",
+    episodes: "",
+    score: "",
+    rank: "",
+    premiered: "",
+    title_english: "",
+    url: "",
   });
 
   const { data: { getPost } = {} } = useQuery(GET_POST, {
@@ -118,6 +115,8 @@ export default function SinglePost(props) {
     //get cover image from api using anime id
     async function getAnimeData(request_url) {
       const res = await axios(request_url);
+      setLoading(false);
+
       const image_url = await res.data.image_url.replace(".jpg", "l.jpg");
       setAnimeData({
         synopsis: res.data.synopsis,
@@ -130,7 +129,10 @@ export default function SinglePost(props) {
       setCoverUrl(image_url);
     }
     const request_url = `https://api.jikan.moe/v3/anime/${mal_id}`;
-    getAnimeData(request_url);
+
+    if (loading) {
+      getAnimeData(request_url);
+    }
 
     output = (
       <div>

@@ -3,12 +3,12 @@
 import React, { useState, useContext } from "react";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
-import "../styles/Pages.css";
+import "../../styles/Pages.css";
 import { Input, Spacer, Modal, Note } from "@geist-ui/react";
 import { User, Mail } from "@geist-ui/react-icons";
 import { useHistory } from "react-router";
-import { AuthContext } from "../context/auth";
-import { REGISTER_USER } from "../graphql";
+import { AuthContext } from "../../context/auth";
+import { REGISTER_USER } from "../../graphql";
 
 export default function Register(props) {
   const context = useContext(AuthContext);

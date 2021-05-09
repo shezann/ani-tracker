@@ -1,23 +1,19 @@
-/* eslint-disable */
 import React, { useState, useContext } from "react";
 import { useQuery } from "@apollo/client";
-import gql from "graphql-tag";
-import Navbar from "./Navbar";
-import CreatePost from "./CreatePost";
-import "../styles/Pages.css";
+import Navbar from "../Navbar";
+import CreatePost from "../modals/CreatePost";
+import "../../styles/Pages.css";
 import { Grid, Divider, Row, Loading, Button } from "@geist-ui/react";
 import { Plus } from "@geist-ui/react-icons";
 
-import Post from "./Post";
-import { AuthContext } from "../context/auth";
-import { GET_POSTS } from "../graphql";
+import Post from "../Post";
+import { AuthContext } from "../../context/auth";
+import { GET_POSTS } from "../../graphql";
 
 export default function Home() {
   const { user } = useContext(AuthContext);
 
-  const { loading, data: { getPosts: posts } = {}, error } = useQuery(
-    GET_POSTS
-  );
+  const { loading, data: { getPosts: posts } = {} } = useQuery(GET_POSTS);
 
   const [showCreatePost, setShowCreatePost] = useState(false);
   const createPostHandler = () => setShowCreatePost(true);

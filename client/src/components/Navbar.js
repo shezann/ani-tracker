@@ -1,14 +1,10 @@
-/* eslint-disable */
-/* eslint-disable */
-
 import React, { useState, useContext } from "react";
 import { Button, User, useMediaQuery } from "@geist-ui/react";
 import { UserPlus, LogIn, LogOut } from "@geist-ui/react-icons";
 
 import "../styles/Navbar.css";
-import { Link } from "react-router-dom";
-import Register from "./Register";
-import Login from "./Login";
+import Register from "./modals/Register";
+import Login from "./modals/Login";
 import { AuthContext } from "../context/auth";
 
 export default function Navbar() {

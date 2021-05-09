@@ -1,23 +1,11 @@
-/* eslint-disable */
-
-import {
-  Modal,
-  Card,
-  Button,
-  Description,
-  User,
-  Text,
-  Link,
-  useModal,
-} from "@geist-ui/react";
-import { Heart, MessageSquare, Trash, Power } from "@geist-ui/react-icons";
 import React, { useContext } from "react";
+import { Card, Button, Description, User, Text, Link } from "@geist-ui/react";
+import { MessageSquare } from "@geist-ui/react-icons";
 import "../styles/Post.css";
 import moment from "moment";
 import { AuthContext } from "../context/auth";
-import Like from "./Like";
-
-import Delete from "./Delete";
+import Like from "./buttons/Like";
+import Delete from "./buttons/Delete";
 
 export default function Post(props) {
   const {
