@@ -1,11 +1,16 @@
 const { UserInputError, AuthenticationError } = require("apollo-server-errors");
 const checkAuth = require("../../helpers/authorization");
 const Post = require("../../models/post.model");
+const User = require("../../models/user.model");
 
 module.exports = {
   Mutation: {
     createComment: async (_, { postId, body }, context) => {
       const { username } = checkAuth(context);
+
+      const creator = await User.findOne({ username });
+      const avatar_url = creator.avatar_urll;
+
       if (body.trim() === "") {
         throw new UserInputError("Empty comment", {
           errors: {
@@ -20,6 +25,7 @@ module.exports = {
         post.comments.unshift({
           body,
           username,
+          avatar_url,
           createdAt: new Date().toISOString(),
         });
         await post.save();

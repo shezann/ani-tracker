@@ -13,9 +13,9 @@ export default function Post(props) {
     anime,
     episode,
     rating,
-    mal_id,
     body,
     username,
+    avatar_url,
     createdAt,
     likeCount,
     commentCount,
@@ -40,10 +40,7 @@ export default function Post(props) {
       <Description title={`EPISODE ${episode}`} content={body} />
 
       <Card.Footer className="card-footer">
-        <User
-          src="https://react.geist-ui.dev/images/avatar.png"
-          name={username}
-        >
+        <User src={avatar_url} name={username}>
           <Link underline href={`/posts/${id}`}>
             {moment(createdAt).fromNow(true)}
           </Link>
@@ -63,7 +60,11 @@ export default function Post(props) {
             </Button>
           </Link>
 
-          <Delete user={user} username={username} postId={id} />
+          <Delete
+            user={user}
+            username={username}
+            postId={id}
+          />
         </div>
       </Card.Footer>
     </Card>

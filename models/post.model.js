@@ -8,11 +8,13 @@ const postSchema = new Schema({
   body: String,
   mal_id: Number,
   username: String,
+  avatar_url: String,
   createdAt: String,
   comments: [
     {
       body: String,
       username: String,
+      avatar_url: String,
       createdAt: String,
     },
   ],

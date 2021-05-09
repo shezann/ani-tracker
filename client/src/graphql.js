@@ -11,6 +11,7 @@ export const GET_POSTS = gql`
       body
       mal_id
       username
+      avatar_url
       createdAt
       likeCount
       likes {
@@ -20,6 +21,7 @@ export const GET_POSTS = gql`
       comments {
         id
         username
+        avatar_url
         createdAt
         body
       }
@@ -38,6 +40,7 @@ export const GET_POST = gql`
       rating
       createdAt
       username
+      avatar_url
       likeCount
       likes {
         username
@@ -46,6 +49,7 @@ export const GET_POST = gql`
         id
         username
         createdAt
+        avatar_url
         body
       }
       commentCount
@@ -60,6 +64,7 @@ export const LOGIN_USER = gql`
       id
       email
       username
+      avatar_url
       token
     }
   }
@@ -83,6 +88,7 @@ export const REGISTER_USER = gql`
       id
       email
       username
+      avatar_url
       createdAt
       token
     }
@@ -110,6 +116,7 @@ export const CREATE_POST = gql`
       rating
       body
       mal_id
+      avatar_url
       createdAt
       username
       likes {
@@ -122,6 +129,7 @@ export const CREATE_POST = gql`
         id
         body
         username
+        avatar_url
         createdAt
       }
       commentCount
@@ -142,6 +150,7 @@ export const DELETE_COMMENT = gql`
       comments {
         id
         username
+        avatar_url
         createdAt
         body
       }
@@ -172,6 +181,7 @@ export const CREATE_COMMENT = gql`
         body
         createdAt
         username
+        avatar_url
       }
       commentCount
     }

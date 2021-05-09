@@ -14,8 +14,7 @@ export default function Navbar() {
 
   const { user, logout } = useContext(AuthContext);
   // TODO: use user.avatar_url here instead and if it's empty use the alt tag
-  const userImgURL =
-    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP_ug6bYQJ9ilkd9rMKpqQ2fnOIYC5u4go_A&usqp=CAU";
+  console.log(user);
 
   const [showRegister, setShowRegister] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
@@ -34,7 +33,7 @@ export default function Navbar() {
       <div className="btn-container">
         <User
           style={{ marginTop: "10px" }}
-          src={userImgURL}
+          src={user.avatar_url}
           name={user.username}
         />
         <Button

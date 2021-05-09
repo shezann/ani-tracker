@@ -10,6 +10,7 @@ module.exports = gql`
     mal_id: Int!
     createdAt: String!
     username: String!
+    avatar_url: String
     comments: [Comment]!
     likes: [Like]!
     likeCount: Int!
@@ -27,6 +28,7 @@ module.exports = gql`
     id: ID!
     createdAt: String!
     username: String!
+    avatar_url: String
     body: String!
   }
   type Like {

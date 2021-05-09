@@ -29,7 +29,6 @@ var axios = require("axios");
 
 export default function SinglePost(props) {
   const history = useHistory();
-
   const isXS = useMediaQuery("xs");
 
   const postId = props.match.params.postId;
@@ -102,12 +101,20 @@ export default function SinglePost(props) {
       likeCount,
       commentCount,
       username,
+      avatar_url,
       createdAt,
     } = getPost;
 
     // TODO: get user avatar
-    const user_avatar =
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP_ug6bYQJ9ilkd9rMKpqQ2fnOIYC5u4go_A&usqp=CAU";
+    let user_avatar =
+      "https://iupac.org/wp-content/uploads/2018/05/default-avatar.png";
+    if (avatar_url) {
+      user_avatar = avatar_url;
+    }
+
+    comments.forEach((element) => {
+      console.log(element);
+    });
 
     let quality = "";
     rating > 5 ? (quality = "good") : (quality = "bad");
@@ -247,13 +254,12 @@ export default function SinglePost(props) {
                   {/* TODO: fix profile picture */}
                   <User
                     style={{ marginTop: "10px" }}
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP_ug6bYQJ9ilkd9rMKpqQ2fnOIYC5u4go_A&usqp=CAU"
+                    src={comment.avatar_url}
                     name={comment.username}
                     className="comment-avatar"
                   >
                     {moment(comment.createdAt).fromNow(true)}
                   </User>
-
                   <div className="user-comment-content">
                     <p>{comment.body}</p>
                     {user && user.username === comment.username && (

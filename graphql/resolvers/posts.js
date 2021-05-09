@@ -2,6 +2,8 @@ const Post = require("../../models/post.model");
 const checkAuth = require("../../helpers/authorization");
 const { AuthenticationError } = require("apollo-server-errors");
 
+const User = require("../../models/user.model");
+
 module.exports = {
   Query: {
     async getPosts() {
@@ -28,6 +30,8 @@ module.exports = {
   Mutation: {
     async createPost(_, { mal_id, anime, episode, rating, body }, context) {
       const user = checkAuth(context);
+      const username = user.username;
+      const creator = await User.findOne({ username });
 
       if (anime.trim() === "") {
         throw new Error("You must enter an anime");
@@ -46,7 +50,8 @@ module.exports = {
         rating: rating,
         body: body,
         user: user.id,
-        username: user.username,
+        username: username,
+        avatar_url: creator.avatar_url,
         createdAt: new Date().toISOString(),
       });
 
