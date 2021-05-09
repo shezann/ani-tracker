@@ -5,16 +5,6 @@
   align-items: center;
 }
 
-.single-post {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.post-content {
-  padding-top: 20px;
-  display: flex;
-}
-
 .back-btn {
   position: fixed !important;
   bottom: 5%;
@@ -22,111 +12,174 @@
   z-index: 99 !important;
 }
 
-.cover-art {
-  width: 25vw;
-  box-shadow: 0 30px 60px rgb(0 0 0 / 12%);
+.review-box {
+  display: block;
+  width: 80%;
+  margin: auto;
+  align-items: center;
+  margin-top: 40px;
+}
+/* GEIST UI STUFF */
+.review-text .content.jsx-2956695818 {
+  margin: 0pt;
+  padding: 0pt !important;
+  position: relative;
+  text-align: left;
+}
+.review-text {
+  display: flex;
+  align-items: flex-start;
+}
+.review-rating {
+  display: flex;
+  justify-content: center !important;
+  font-weight: 400 !important;
   border-radius: 5px;
-  margin-top: 16px;
-  object-fit: cover;
-}
-/* add media queries for cover art on phone */
-
-.post-header {
-  display: flex;
-  margin-bottom: 30px;
-}
-.anime-data-container {
-  margin-left: 20px;
-  display: flex;
-  align-items: flex-end;
-}
-.anime-data {
-  margin-bottom: 10px;
-}
-.anime-data h1 {
-  margin-bottom: 0px;
-}
-.anime-data h4 {
-  margin-bottom: 0px;
-}
-.tag {
+  width: 5.625rem;
+  height: 4.388rem;
+  border: 3px solid;
+  border-color: #a5a5a5;
+  font-size: 3rem;
   margin-right: 5px;
 }
-.anime-data p {
-  font-size: 10pt;
-  color: #666666;
-  margin-top: 0px;
+.review-rating.good {
+  border-color: #00ab66;
 }
-.anime-data-footer {
+.review-rating.bad {
+  border-color: #ee0000;
+}
+.avatar-text {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  padding: 0 22px 0 22px;
+}
+.body {
+  padding: 0 22px 0 22px;
+}
+.username-ep {
+  margin-left: 10px;
+  margin-bottom: 0;
+}
+.username-ep h2 {
+  margin-bottom: -12px;
+}
+.username-ep h4 {
+  margin-bottom: 0;
+  color: #666666;
+}
+.user-avatar {
+  margin-top: 0;
+  border-radius: 5px;
+  width: 50px !important;
+  height: 50px;
+}
+.review-footer {
   display: flex;
   justify-content: space-between;
-  align-items: center;
 }
-
-.review-rating {
-  background-color: red;
+.review-footer p {
+  color: #666666;
 }
-.review-box {
-  background-color: aqua;
-
-  width: 469px;
-  height: 347px;
-}
-.review-buttons {
+.like-delete-btn {
   display: flex;
 }
 
-@media only screen and (max-width: 420px) {
-  .post-header {
-    display: flex;
-    flex-direction: column;
-  }
+.comment-container {
+  margin-top: 20px;
+  flex-direction: column;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+.create-comment {
+  display: flex;
+  flex-grow: 1;
+}
+.submit-btn {
+  margin-left: 10px;
+  margin-right: 5px;
+  height: auto !important;
 }
 
-@media only screen and (max-width: 1200px) {
-  .cover-art {
-    width: 300px;
-    box-shadow: 0 30px 60px rgb(0 0 0 / 12%);
-    border-radius: 5px;
-    margin-top: 16px;
-    object-fit: cover;
-  }
-  .post-header {
-    display: flex;
-  }
+.user-comment {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
-
-@media only screen and (max-width: 900px) {
-  .anime-data p {
-    font-size: 8pt;
-    color: #666666;
-    margin-top: 0px;
-  }
+.comment-avatar {
+  width: 200px !important;
+}
+.user-comment-content {
+  padding-left: 15px;
+  padding-right: 22px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  border-left: 1px solid;
+  border-color: #eaeaea;
 }
 
 @media only screen and (max-width: 780px) {
-  .post-header {
-    display: flex;
-    flex-direction: column;
-  }
-  .cover-art {
-    width: 100%;
-    box-shadow: 0 30px 60px rgb(0 0 0 / 6%);
-    border-radius: 5px;
-    margin-top: 8px;
-    margin-bottom: 8px;
-    object-fit: cover;
-  }
-  .anime-data h1 {
-    font-size: 2rem;
-    margin-bottom: 6px;
-  }
-  .anime-data h4 {
-    margin-bottom: 6px;
+  .single-post-container {
+    display: block;
+    margin: auto;
+    width: 90%;
+    align-items: center;
   }
 
-  .tag {
-    margin-right: 5px;
-    font-size: 10px !important;
+  .single-post-container p {
+    font-size: 12px;
+  }
+
+  .review-box {
+    display: block;
+    width: 100%;
+    margin: auto;
+    align-items: center;
+    margin-top: 40px;
+  }
+  .review-box h1 {
+    font-size: 1.2rem !important;
+  }
+  .review-box h2 {
+    font-size: 14px !important;
+  }
+  .review-box h4 {
+    font-size: 12px !important;
+  }
+  .user-avatar {
+    margin-top: 0;
+    border-radius: 5px;
+    width: 40px !important;
+    height: 40px;
+  }
+  .username-ep {
+    margin-left: 10px;
+    margin-bottom: 0;
+  }
+  .username-ep h2 {
+    margin-bottom: auto;
+  }
+  .username-ep h4 {
+    margin-bottom: 0;
+    color: #666666;
+  }
+
+  .review-rating {
+    position: relative;
+    justify-content: center !important;
+    border-radius: 5px;
+    width: 30px;
+    height: 25px;
+    border: 3px solid;
+    border-color: #a5a5a5;
+    font-size: 2px !important;
+  }
+  .review-rating.good {
+    border-color: #00ab66;
+  }
+  .review-rating.bad {
+    border-color: #ee0000;
   }
 }

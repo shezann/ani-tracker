@@ -1,23 +1,26 @@
-/* eslint-disable */
-
 import React, { useContext, useState } from "react";
 import {
   Loading,
   Row,
   Note,
   Textarea,
+  User,
   Button,
   useMediaQuery,
   Divider,
+  Card,
   Tag,
   Link,
+  Spacer,
 } from "@geist-ui/react";
 import { ChevronLeft } from "@geist-ui/react-icons";
+import ProgressBar from "./ProgressBar";
 
 import "../styles/SinglePost.css";
 import Navbar from "./Navbar";
 import Like from "./Like";
 import Delete from "./Delete";
+import AnimeInfo from "./AnimeInfo";
 
 import { useHistory } from "react-router";
 
@@ -34,6 +37,7 @@ export default function SinglePost(props) {
 
   const postId = props.match.params.postId;
   const [comment, setComment] = useState("");
+  const [submitStatus, setSubmitStatus] = useState(true);
   const { user } = useContext(AuthContext);
 
   //data about the anime
@@ -65,6 +69,13 @@ export default function SinglePost(props) {
     },
   });
 
+  function handleCommentChange(value) {
+    if (value !== "") {
+      setSubmitStatus(false);
+    }
+    setComment(value);
+  }
+
   function handleCommentSubmit() {
     createComment();
     setComment("");
@@ -92,6 +103,13 @@ export default function SinglePost(props) {
       username,
       createdAt,
     } = getPost;
+
+    // TODO: get user avatar
+    const user_avatar =
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP_ug6bYQJ9ilkd9rMKpqQ2fnOIYC5u4go_A&usqp=CAU";
+
+    let quality = "";
+    rating > 5 ? (quality = "good") : (quality = "bad");
 
     //get cover image from api using anime id
     async function getCover(request_url) {
@@ -128,98 +146,122 @@ export default function SinglePost(props) {
             BACK
           </Button>
         )}
-        <div className="single-post">
-          <div className="post-content">
-            <div className="post-header">
-              {/* TODO: update link later */}
-              <img
-                className="cover-art"
-                src="https://cdn.myanimelist.net/images/anime/1911/113611l.jpg"
-                alt="cover_art.jpg"
-              />
-              <div className="anime-data-container">
-                <div className="anime-data">
-                  <h1>
-                    <Link href={animeData.url}>{anime}</Link>
-                  </h1>
 
-                  <Tag className="tag" type="success" invert>
-                    Score: {animeData.score}
-                  </Tag>
-                  <Tag className="tag" type="secondary">
-                    Rank: {animeData.rank}
-                  </Tag>
-                  <Tag className="tag" type="secondary">
-                    Episodes: {animeData.episodes}
-                  </Tag>
-
-                  <Divider style={{ marginBottom: "6px" }} />
-
-                  <h4>Synopsis</h4>
-                  <p>{animeData.synopsis}</p>
-
-                  <Divider style={{ marginBottom: "6px" }} />
-                  <div className="anime-data-footer">
-                    <Tag className="tag bottom" type="secondary">
-                      Aired: {animeData.premiered}
-                    </Tag>
-                    <Link
-                      style={{ fontSize: "14px" }}
-                      href={animeData.url}
-                      color
-                    >
-                      data from MyAnimeList
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* TODO: show the main post here */}
-          </div>
+        <div>
+          {/* TODO: display anime info here */}
+          <AnimeInfo animeData={animeData} anime={anime} />
 
           <div className="review-box">
-            <div className="review-rating">{rating}</div>
-
             <div className="review-text">
-              <h1>{username}'s review</h1>
-              <p>{body}</p>
+              <div className={`review-rating ${quality}`}>
+                <h1>{rating}</h1>
+              </div>
+              <Card>
+                <div className="avatar-text">
+                  <img
+                    className="user-avatar"
+                    style={{ marginTop: "10px" }}
+                    src={user_avatar}
+                    alt="user_avatar.jpg"
+                  />
+                  <div className="username-ep">
+                    <h2>{username}'s review</h2>
+                    <h4>
+                      Episode: {episode} of {animeData.episodes}
+                    </h4>
+                  </div>
+                </div>
 
-              <div className="review-buttons">
-                <Like user={user} data={{ id, likes, likeCount }} />
-                <Delete
-                  user={user}
-                  username={username}
-                  postId={id}
-                  atSinglePost={true}
+                <div className="body">
+                  <ProgressBar
+                    currentEpisode={episode}
+                    totalEpisodes={animeData.episodes}
+                  />
+                  <p>{body}</p>
+                </div>
+
+                <Card.Footer className="review-footer">
+                  <p> Posted {moment(createdAt).fromNow(false)}</p>
+                  <div className="like-delete-btn">
+                    <Like
+                      user={user}
+                      data={{ id, likes, likeCount }}
+                      className="like-btn"
+                    />
+                    <Delete
+                      user={user}
+                      username={username}
+                      postId={id}
+                      atSinglePost={true}
+                    />
+                  </div>
+                </Card.Footer>
+              </Card>
+            </div>
+
+            <Spacer y={1} />
+            <Divider />
+            <Spacer y={1} />
+
+            {/* TODO: enter comment text area and button here */}
+            <div className="comment-container">
+              <div className="create-comment">
+                <Textarea
+                  width="100%"
+                  placeholder="Add a comment"
+                  minHeight="20px"
+                  value={comment}
+                  onChange={(e) => handleCommentChange(e.target.value)}
                 />
+                <Button
+                  type="success"
+                  ghost
+                  auto
+                  disabled={submitStatus}
+                  onClick={handleCommentSubmit}
+                  className="submit-btn"
+                >
+                  Submit
+                </Button>
               </div>
 
-              <p> {moment(createdAt).fromNow(false)}</p>
+              <Spacer y={1} />
+
+              <Divider align="start">
+                {commentCount} {commentCount === 1 ? "comment" : "comments"}
+              </Divider>
+              <Spacer y={2} />
+
+              {comments.map((comment) => (
+                <div key={comment.id} className="user-comment">
+                  {/* TODO: fix profile picture */}
+                  <User
+                    style={{ marginTop: "10px" }}
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP_ug6bYQJ9ilkd9rMKpqQ2fnOIYC5u4go_A&usqp=CAU"
+                    name={comment.username}
+                    className="comment-avatar"
+                  >
+                    {moment(comment.createdAt).fromNow(true)}
+                  </User>
+
+                  <div className="user-comment-content">
+                    <p>{comment.body}</p>
+                    {user && user.username === comment.username && (
+                      <div>
+                        <Delete
+                          user={user}
+                          username={username}
+                          postId={id}
+                          commentId={comment.id}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-
-        {comments.map((comment) => (
-          <div key={comment.id}>
-            <Note>
-              <p>{comment.username}</p>
-
-              {user && user.username === comment.username && (
-                <div>
-                  <Delete
-                    user={user}
-                    username={username}
-                    postId={id}
-                    commentId={comment.id}
-                  />
-                </div>
-              )}
-              <p>{moment(createdAt).fromNow(true)}</p>
-              <p>{comment.body}</p>
-            </Note>
-          </div>
-        ))}
       </div>
     );
   }
@@ -227,17 +269,7 @@ export default function SinglePost(props) {
   return (
     <div>
       <Navbar />
-      <div className="single-post-container">
-        {output}
-        <Textarea
-          width="50%"
-          placeholder="Comment here"
-          minHeight="20px"
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-        />
-        <Button onClick={handleCommentSubmit}>Submit</Button>
-      </div>
+      <div className="single-post-container">{output}</div>
     </div>
   );
 }
