@@ -178,4 +178,15 @@ export const CREATE_COMMENT = gql`
   }
 `;
 
+export const ADD_AVATAR = gql`
+  mutation($username: String!, $avatar_url: String!) {
+    addAvatar(username: $username, avatar_url: $avatar_url) {
+      id
+      email
+      username
+      avatar_url
+    }
+  }
+`;
+
 //Subscription

@@ -24,6 +24,18 @@ function generateToken(user) {
 
 module.exports = {
   Mutation: {
+    async addAvatar(_, { username, avatar_url }) {
+      //TODO: add validators later
+      let user = await User.findOne({ username });
+
+      if (user && avatar_url) {
+        user.avatar_url = avatar_url;
+        await user.save();
+        return user;
+      }
+      // TODO: throw error catching later
+    },
+
     async login(_, { username, password }) {
       const { errors, valid } = validateLoginInput(username, password);
       if (!valid) {

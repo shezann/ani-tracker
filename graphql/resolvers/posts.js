@@ -13,7 +13,6 @@ module.exports = {
       }
     },
     async getPost(_, { postId }) {
-      // FIXME: goes straight to catch, check if there's a fix
       try {
         const post = await Post.findById(postId);
         if (post) {

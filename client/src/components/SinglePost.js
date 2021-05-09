@@ -63,6 +63,10 @@ export default function SinglePost(props) {
     update() {
       setComment("");
     },
+    onError(err) {
+      //TODO: show login page
+      console.log(err);
+    },
     variables: {
       postId,
       body: comment,

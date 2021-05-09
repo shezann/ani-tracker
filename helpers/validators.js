@@ -46,3 +46,5 @@ module.exports.validateLoginInput = (username, password) => {
     valid: Object.keys(errors).length < 1,
   };
 };
+
+// TODO: create a validator function for adding avatar urls

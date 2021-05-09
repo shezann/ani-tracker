@@ -39,11 +39,7 @@ export default function Post(props) {
   let quality = "";
   rating > 5 ? (quality = "good") : (quality = "bad");
 
-  // TODO: make the functions
-
-  function handleComment() {
-    console.log("You are about to comment!");
-  }
+  function handleComment() {}
 
   return (
     <Card hoverable className="post-card">
@@ -65,7 +61,6 @@ export default function Post(props) {
           </Link>
         </User>
         <div className="interact-btns">
-          {/* FIXME: like btn was here */}
           <Like user={user} data={{ id, likes, likeCount }} />
 
           <Link href={`/posts/${id}`}>

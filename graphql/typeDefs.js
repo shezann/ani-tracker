@@ -20,6 +20,7 @@ module.exports = gql`
     email: String!
     token: String!
     username: String!
+    avatar_url: String
     createdAt: String!
   }
   type Comment {
@@ -57,6 +58,7 @@ module.exports = gql`
     createComment(postId: ID!, body: String!): Post!
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
+    addAvatar(username: String!, avatar_url: String!): User!
   }
   type Subscription {
     newPost: Post!

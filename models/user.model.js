@@ -5,6 +5,7 @@ const userSchema = new Schema({
   username: String,
   password: String,
   email: String,
+  avatar_url: String,
   createdAt: String,
 });
 

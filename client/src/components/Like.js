@@ -25,6 +25,10 @@ export default function Like(props) {
   }, [user, likes]);
 
   const [likePost] = useMutation(LIKE_POST, {
+    onError(err) {
+      // TODO: show login page when clicked
+      console.log(err);
+    },
     variables: { postId: id },
   });
 
