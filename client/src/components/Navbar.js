@@ -17,6 +17,7 @@ export default function Navbar() {
   const btnSize = isXS ? "mini" : "small";
 
   const { user, logout } = useContext(AuthContext);
+  // TODO: use user.avatar_url here instead and if it's empty use the alt tag
   const userImgURL =
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSP_ug6bYQJ9ilkd9rMKpqQ2fnOIYC5u4go_A&usqp=CAU";
 

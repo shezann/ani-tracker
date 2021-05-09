@@ -116,17 +116,21 @@ export default function SinglePost(props) {
     rating > 5 ? (quality = "good") : (quality = "bad");
 
     //get cover image from api using anime id
-    async function getCover(request_url) {
+    async function getAnimeData(request_url) {
       const res = await axios(request_url);
-      console.log(JSON.stringify(res.data));
       const image_url = await res.data.image_url.replace(".jpg", "l.jpg");
+      setAnimeData({
+        synopsis: res.data.synopsis,
+        episodes: res.data.episodes,
+        score: res.data.score,
+        rank: res.data.rank,
+        premiered: res.data.premiered,
+        url: res.data.url,
+      });
       setCoverUrl(image_url);
     }
-
     const request_url = `https://api.jikan.moe/v3/anime/${mal_id}`;
-    //getCover(request_url);
-
-    //TODO: get synopsis from api
+    getAnimeData(request_url);
 
     output = (
       <div>
@@ -153,7 +157,7 @@ export default function SinglePost(props) {
 
         <div>
           {/* TODO: display anime info here */}
-          <AnimeInfo animeData={animeData} anime={anime} />
+          <AnimeInfo coverUrl={coverUrl} animeData={animeData} anime={anime} />
 
           <div className="review-box">
             <div className="review-text">

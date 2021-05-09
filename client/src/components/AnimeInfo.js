@@ -4,17 +4,13 @@ import "../styles/AnimeInfo.css";
 import { Tag, Link, Divider } from "@geist-ui/react";
 
 export default function AnimeInfo(props) {
-  const { animeData, anime } = props;
+  const { animeData, anime, coverUrl } = props;
 
   return (
     <div className="info-content">
       <div className="info-header">
         {/* TODO: update link later */}
-        <img
-          className="cover-art"
-          src="https://cdn.myanimelist.net/images/anime/1911/113611l.jpg"
-          alt="cover_art.jpg"
-        />
+        <img className="cover-art" src={coverUrl} alt="cover_art.jpg" />
         <div className="anime-data-container">
           <div className="anime-data">
             <h1>
