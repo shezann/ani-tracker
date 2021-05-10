@@ -7,7 +7,7 @@ import { Grid, Divider, Row, Loading, Button } from "@geist-ui/react";
 import { Plus } from "@geist-ui/react-icons";
 
 import Post from "../Post";
-import Info from "./Info";
+import HomeInfo from "./HomeInfo";
 
 import { AuthContext } from "../../context/auth";
 import { GET_POSTS } from "../../graphql";
@@ -72,7 +72,7 @@ export default function Home() {
             )}
           </div>
         ) : (
-          <Info />
+          <HomeInfo />
         )}
       </div>
     </div>
