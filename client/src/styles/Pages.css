@@ -37,7 +37,6 @@
   display: flex !important;
 }
 
-
 .search-result {
   display: flex;
   height: 45px !important;
@@ -58,4 +57,19 @@
   object-fit: cover;
   margin-right: 10px !important;
   border-radius: 5px !important;
+}
+
+.user-info-container {
+  display: block;
+  margin: auto;
+  width: 80%;
+  align-items: center;
+}
+
+.avatar-input-box {
+  display: flex;
+}
+.change-avatar-btn {
+  margin-left: 5px !important;
+  height: 36px !important;
 }

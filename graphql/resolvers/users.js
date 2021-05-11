@@ -18,7 +18,7 @@ function generateToken(user) {
       avatar_url: user.avatar_url,
     },
     process.env.SECRET_KEY,
-    { expiresIn: "1d" }
+    { expiresIn: "365d" }
   );
   return token;
 }

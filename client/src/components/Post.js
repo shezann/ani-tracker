@@ -32,7 +32,10 @@ export default function Post(props) {
   return (
     <Card hoverable className="post-card">
       <div className="anime-title">
-        <Text h4>{anime}</Text>
+        <Link href={`/posts/${id}`}>
+          <Text h4>{anime}</Text>
+        </Link>
+
         <div className={`show-rating ${quality}`}>
           <h4>{rating}</h4>
         </div>
@@ -60,11 +63,7 @@ export default function Post(props) {
             </Button>
           </Link>
 
-          <Delete
-            user={user}
-            username={username}
-            postId={id}
-          />
+          <Delete user={user} username={username} postId={id} />
         </div>
       </Card.Footer>
     </Card>

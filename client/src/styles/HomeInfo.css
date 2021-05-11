@@ -1,0 +1,12 @@
+.home-info {
+  margin-top: 35px;
+}
+
+.title-card {
+  text-align: center;
+}
+.title-card h2 {
+  margin-top: -25px !important;
+  margin-bottom: 30px;
+  color: #696969;
+}
