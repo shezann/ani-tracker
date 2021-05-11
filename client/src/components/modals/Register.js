@@ -1,7 +1,4 @@
-/* eslint-disable */
-
 import React, { useState, useContext } from "react";
-import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 import "../../styles/Pages.css";
 import { Input, Spacer, Modal, Note } from "@geist-ui/react";
@@ -27,9 +24,9 @@ export default function Register(props) {
     setInput({ ...input, [event.target.name]: event.target.value });
   }
 
-  const [addUser, { loading }] = useMutation(REGISTER_USER, {
+  const [addUser] = useMutation(REGISTER_USER, {
     update(proxy, result) {
-      context.login(result.data.login);
+      context.login(result.data.register);
       closeHandler();
       history.push("/");
     },
