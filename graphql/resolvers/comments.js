@@ -9,7 +9,7 @@ module.exports = {
       const { username } = checkAuth(context);
 
       const creator = await User.findOne({ username });
-      const avatar_url = creator.avatar_urll;
+      const avatar_url = creator.avatar_url;
 
       if (body.trim() === "") {
         throw new UserInputError("Empty comment", {
