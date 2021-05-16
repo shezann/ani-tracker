@@ -165,7 +165,6 @@ export default function SinglePost(props) {
         )}
 
         <div>
-          {/* TODO: display anime info here */}
           <AnimeInfo coverUrl={coverUrl} animeData={animeData} anime={anime} />
 
           <div className="review-box">
@@ -220,7 +219,6 @@ export default function SinglePost(props) {
             <Divider />
             <Spacer y={1} />
 
-            {/* TODO: enter comment text area and button here */}
             <div className="comment-container">
               <div className="create-comment">
                 <Textarea

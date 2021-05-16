@@ -9,7 +9,6 @@ export default function AnimeInfo(props) {
   return (
     <div className="info-content">
       <div className="info-header">
-        {/* TODO: update link later */}
         <img className="cover-art" src={coverUrl} alt="cover_art.jpg" />
         <div className="anime-data-container">
           <div className="anime-data">

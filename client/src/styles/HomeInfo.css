@@ -2,11 +2,46 @@
   margin-top: 35px;
 }
 
+.join-btn {
+  margin-top: -30px;
+  position: relative;
+  top: 30px;
+}
+
 .title-card {
+  border-radius: 10px;
+  border: 1px solid;
   text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 60px;
 }
 .title-card h2 {
-  margin-top: -25px !important;
+  margin-bottom: 0px;
+}
+
+.trending-now {
   margin-bottom: 30px;
-  color: #696969;
+}
+.trending-now h2 {
+  background-color: #000;
+  color: white;
+  padding: 10px;
+}
+.upcoming h2 {
+  background-color: #000;
+  color: white;
+  padding: 10px;
+}
+
+@media only screen and (max-width: 620px) {
+  h2 {
+    font-size: 5vw !important;
+  }
+  h5 {
+    font-size: 3vw !important;
+  }
+  span {
+    font-size: 12px !important;
+  }
 }
