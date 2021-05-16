@@ -7,7 +7,7 @@ import Register from "./modals/Register";
 import Login from "./modals/Login";
 import { AuthContext } from "../context/auth";
 
-export default function Navbar() {
+export default function Navbar(props) {
   //GEIST UI MEDIA QUERY
   const isXS = useMediaQuery("xs");
   const btnSize = isXS ? "mini" : "small";

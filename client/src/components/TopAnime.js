@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import "../styles/TopAnime.css";
 import Tilt from "react-parallax-tilt";
+import { useMediaQuery } from "@geist-ui/react";
 
 export default function TopAnime(props) {
+  let animeCount = 6;
+  const isMD = useMediaQuery("md");
+  isMD ? (animeCount = 5) : (animeCount = 6);
+
   const [scale] = useState(1.15);
 
   const top6 = [];
 
-  for (let index = 0; index < 6; index++) {
+  for (let index = 0; index < animeCount; index++) {
     top6.push(props.anime[index]);
   }
 
@@ -26,7 +31,7 @@ export default function TopAnime(props) {
                 src={anime.image_url.replace(".jpg", "l.jpg")}
                 alt=""
                 className="top-anime-cover-art"
-              ></img>
+              />
               <span>{anime.title}</span>
             </Tilt>
           </div>

@@ -17,6 +17,7 @@ export default function Home() {
 
   const { loading, data: { getPosts: posts } = {} } = useQuery(GET_POSTS);
 
+
   const [showCreatePost, setShowCreatePost] = useState(false);
   const createPostHandler = () => setShowCreatePost(true);
   const closeHandler = (event) => {

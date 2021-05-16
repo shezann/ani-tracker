@@ -60,11 +60,11 @@ export default function SinglePost(props) {
       setComment("");
     },
     onError(err) {
-      //TODO: show login page
       console.log(err);
     },
     variables: {
       postId,
+      avatar_url: user.avatar_url,
       body: comment,
     },
   });

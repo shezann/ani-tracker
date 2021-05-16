@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Register from "../modals/Register";
 import "../../styles/HomeInfo.css";
 import { Button, Row, Loading } from "@geist-ui/react";
 import TopAnime from "../TopAnime";
@@ -8,6 +9,12 @@ export default function HomeInfo() {
   const [loading, setLoading] = useState(true);
   const [trending, setTrending] = useState([]);
   const [upcoming, setUpcoming] = useState([]);
+
+  const [showRegister, setShowRegister] = useState(false);
+  const registerHandler = () => setShowRegister(true);
+  const closeHandler = (event) => {
+    setShowRegister(false);
+  };
 
   async function getAnimeData() {
     const resTrending = await axios(
@@ -31,9 +38,14 @@ export default function HomeInfo() {
         <h2>Anime is better with friends</h2>
         <h5>Create your account and start sharing today!</h5>
         <div className="join-btn">
-          <Button auto shadow type="secondary">
+          <Button auto shadow type="secondary" onClick={registerHandler}>
             Join Now!
           </Button>
+          <Register
+            closeHandler={closeHandler}
+            showRegister={showRegister}
+            setShowRegister={setShowRegister}
+          />
         </div>
       </div>
 
